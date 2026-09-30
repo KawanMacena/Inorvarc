@@ -6,7 +6,7 @@ Hoje o site é HTML, CSS e JavaScript e abre no navegador, sem servidor. O banco
 
 ![Modelo entidade-relacionamento do Inovarc](docs/modelo-er.png)
 
-## O que mudou no site
+## O que mudou no site:
 
 - A entrada do site ficou em `index.html`, que abre a tela de acesso.
 - Imagens, CSS e JavaScript foram para `assets/`.
