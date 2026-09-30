@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+   
+    <link rel="stylesheet" href="../../assets/css/painel.css">
+
+    <title>Painel Administrativo</title>
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="header-left">
+            <img src="../../assets/img/logo.jpeg" alt="Logo">
+            
+            <div class="titulo">
+                <h1>Painel Administrativo</h1>
+                <p>Gestão de Solicitações</p>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <a href="../acesso/index.html">Voltar</a>
+
+            <div class="notificacao">
+                    🔔
+                <span>2</span>
+            </div>
+
+            <div class="perfil">
+                <p>AD</p>
+            </div>
+        </div>
+
+    </header>
+
+        <main class="container">
+
+        <!-- CARDS -->
+        <section class="cards">
+
+            <div class="card pendente">
+                <h3>Pendentes</h3>
+                <h2>1</h2>
+            </div>
+
+            <div class="card analise">
+                <h3>Em Análise</h3>
+                <h2>0</h2>
+            </div>
+
+            <div class="card andamento">
+                <h3>Em Andamento</h3>
+                <h2>1</h2>
+            </div>
+
+            <div class="card concluido">
+                <h3>Concluídos</h3>
+                <h2>1</h2>
+            </div>
+
+        </section>
+
+          <!-- BUSCA -->
+        <section class="filtros">
+
+            <input type="text" placeholder="Buscar por endereço, categoria ou descrição...">
+
+            <select>
+                <option>Todos os Status</option>
+                <option>Pendente</option>
+                <option>Em análise</option>
+                <option>Em andamento</option>
+                <option>Concluído</option>
+            </select>
+
+        </section>
+
+         <!-- TABELA -->
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>Localização</th>
+                        <th>Descrição</th>
+                        <th>Status</th>
+                        <th>Recebido</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>#1</td>
+                        <td>Buraco / Asfalto</td>
+                        <td>Av. Paulista</td>
+                        <td>Buraco grande na pista</td>
+                        <td>Pendente</td>
+                        <td>1h atrás</td>
+                        <td><a href="#">Ver detalhes</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>#2</td>
+                        <td>Iluminação</td>
+                        <td>Rua das Flores</td>
+                        <td>Poste apagado</td>
+                        <td>Em andamento</td>
+                        <td>1 dia atrás</td>
+                        <td><a href="#">Ver detalhes</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>#3</td>
+                        <td>Lixo / Entulho</td>
+                        <td>Av. Brasil</td>
+                        <td>Lixo acumulado na calçada</td>
+                        <td>Concluído</td>
+                        <td>2 dias atrás</td>
+                        <td><a href="#">Ver detalhes</a></td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+
+    
+</body>
+    </html>

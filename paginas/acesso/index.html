@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../assets/css/acesso.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+    <title>Inovarc - Cidadão</title>
+</head>
+
+<body>
+
+    <img src="../../assets/img/logo.jpeg" alt="logo" class="logo">
+
+    <h1 class="title">Inovarc Cidadão</h1>
+
+    <h3 class="subtitle">
+        Sistema de Gestão de Problemas Urbanos
+    </h3>
+
+
+    <!-- ========================= -->
+    <!-- TELA DE ESCOLHA -->
+    <!-- ========================= -->
+
+    <div class="container d-flex" id="escolha">
+        
+        <!-- CIDADÃO -->
+        <div class="box" onclick="abrirLogin('cidadao')">
+
+            <img src="../../assets/img/cidadão.png" alt="cidadão">
+
+            <h2>Acesso Cidadão</h2>
+
+            <p>
+                Reporte problemas urbanos de forma rápida e simples
+                através do aplicativo mobile.
+            </p>
+
+            <ul class="lista">
+                <li>Tire foto do problema</li>
+                <li>Localização Automática</li>
+                <li>Acompanhe suas Solicitações</li>
+            </ul>
+            
+        </div>
+        <div id="overlay"></div>
+        
+        <!-- ADMINISTRADOR -->
+        <div class="box" onclick="abrirLogin('admin')">
+            
+            <img src="../../assets/img/painel.png" alt="painel">
+            
+            <h2>Painel Administrativo</h2>
+            
+            <p>
+                Gerencie, organize e resolva as solicitações
+                recebidas dos cidadãos.
+            </p>
+            
+            <ul class="lista">
+                <li>Dashboards com estatísticas</li>
+                <li>Gerencie status em tempo real</li>
+                <li>Visualize localização exata</li>
+            </ul>
+            
+        </div>
+        
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ÁREA DE LOGIN -->
+    <!-- ========================= -->
+
+    <div class="login-container" id="login">
+
+        <div class="login-box">
+
+            <button class="voltar" onclick="voltar()">
+                ← Voltar
+            </button>
+
+
+            <!-- LOGIN CIDADÃO -->
+
+            <div id="loginCidadao" class="login-form">
+
+                <img src="../../assets/img/cidadão.png" alt="cidadão">
+
+                <h2>Acesso Cidadão</h2>
+
+                <p>
+                    Entre para acompanhar suas solicitações
+                </p>
+                <label for="email">E-mail:</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Ex: joaoexemplo@gmail.com"
+                >
+                <label for="senhaCidadao">Senha:</label>
+                <input
+                    type="password"
+                    id="senhaCidadao"
+                    placeholder="Senha"
+                >
+
+                <button class="btn-login" type="button" onclick="entrar('cidadao')">
+                    Entrar
+                </button>
+
+                <a href="#" class="esqueci">
+                    Esqueci minha senha
+                </a>
+                <a href="#" class="cadastrar">
+                    cadastre-se
+                </a>
+
+            </div>
+
+
+            <!-- LOGIN ADMIN -->
+
+            <div id="loginAdmin" class="login-form">
+
+                <img src="../../assets/img/painel.png" alt="administrador">
+
+                <h2>Painel Administrativo</h2>
+
+                <p>
+                    Acesso restrito para gestores.
+                </p>
+                <label for="CNPJ">CNPJ:</label>
+                <input
+                    type="text" id="CNPJ"
+                    placeholder="00.000.000/0000-00:"
+                >
+                <label for="senhaAdmin">Senha:</label>
+                <input
+                    type="password"
+                    id="senhaAdmin"
+                    placeholder="Senha:"
+                >
+
+                <button class="btn-login" type="button" onclick="entrar('admin')">
+                    Entrar
+                </button>
+
+                <a href="#" class="esqueci">
+                    Esqueci minha senha
+                </a>
+                <a href="#" class="cadastrar">
+                    Faça seu cadastro
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../../assets/js/login.js"></script>
+</body>
+
+</html>
