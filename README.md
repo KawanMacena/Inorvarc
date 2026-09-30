@@ -8,7 +8,6 @@ Hoje o site é HTML, CSS e JavaScript e abre no navegador, sem servidor. O banco
 
 ## O que mudou no site
 
-As telas estavam espalhadas em pastas com nomes soltos, imagens repetidas e um arquivo compactado da mesma tela de login. Isso foi reorganizado para apresentar e para continuar o desenvolvimento.
 
 - A entrada do site ficou em `index.html`, que abre a tela de acesso.
 - Imagens, CSS e JavaScript foram para `assets/`.
