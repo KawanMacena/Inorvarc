@@ -4,7 +4,7 @@ Sistema de gestão de problemas urbanos. O cidadão registra uma ocorrência. O 
 
 O site está em HTML, CSS e JavaScript. Ainda não há servidor nem banco. O modelo conceitual do banco já está desenhado e fica em `docs/modelo-er.png`.
 
-## O que mostrar no GitHub
+## GitHub
 
 A branch `main` é a versão organizada do projeto, com as telas, os arquivos separados e o modelo do banco.
 
@@ -94,11 +94,3 @@ Ligação com as telas:
 | Foto do relato | `imagem` |
 
 Antes de escrever o script do banco, confirmar duas cardinalidades do desenho. No uso do sistema, um cidadão registra várias ocorrências e uma categoria serve para várias ocorrências. No desenho, `registra` e `classifica` estão mais restritos do que isso. A tela pede CNPJ no cadastro administrativo, e o modelo do administrador tem e-mail, senha e cargo. O CNPJ ainda não está na entidade.
-
-## Roteiro curto para o vídeo
-
-1. Mostrar o repositório e as branches `main` e `kawan`.
-2. Explicar que a `kawan` trouxe a tela de acesso refeita e os dois cadastros, e que isso foi encaixado na `main`.
-3. Abrir as pastas `paginas`, `assets` e `docs`.
-4. No navegador, mostrar a escolha, o login, o cadastro e a entrada no painel pelo administrador.
-5. Abrir `docs/modelo-er.png` e nomear as entidades e o que cada tela vai gravar quando o banco existir.
