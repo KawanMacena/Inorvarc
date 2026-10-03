@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>Inovarc - Cadastro Administrativo</title>
+    <link rel="stylesheet" href="css/stylem.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <script src="scriptm.js" defer></script>
+</head>
+<body>
+    <main class="pagina">
+        <header class="cabecalho">
+            <div class="logo-card" aria-label="Logo Inovarc">
+                <img src="logo.jpeg" alt="Logo Inovarc" class="logo">
+               
+            </div>
+            <h1 class="title">Inovarc Administrativo</h1>
+            <p class="subtitle">Criar Conta no Sistema</p>
+        </header>
+
+        <section class="login-container" id="cadastro" aria-label="Cadastro de conta">
+            <div class="login-box">
+
+                <!-- Formulário de Cadastro Administrativo -->
+                <form id="cadastroAdmin" class="login-form" data-form="cadastro-admin">
+                    <h2>Cadastro Administrativo</h2>
+                    <p>Informe os dados da instituição e do responsável.</p>
+
+                    <label for="instituicaoAdmin">Nome da instituição:</label>
+                    <input id="instituicaoAdmin" name="instituicao" type="text"
+                        placeholder="Nome da prefeitura ou órgão" required>
+
+                    <label for="cnpjCadastroAdmin">CNPJ:</label>
+                    <input id="cnpjCadastroAdmin" name="cnpj" type="text" autocomplete="off"
+                        placeholder="00.000.000/0000-00" required>
+
+                    <label for="responsavelAdmin">Nome do responsável:</label>
+                    <input id="responsavelAdmin" name="responsavel" type="text" autocomplete="name"
+                        placeholder="Nome completo" required>
+
+                    <label for="emailAdmin">E-mail institucional:</label>
+                    <input id="emailAdmin" name="email" type="email" autocomplete="email"
+                        placeholder="nome@instituicao.gov.br" required>
+
+                    <label for="senhaCadastroAdmin">Senha:</label>
+                    <input id="senhaCadastroAdmin" name="senha" type="password"
+                        autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
+
+                    <label for="confirmarSenhaAdmin">Confirme sua senha:</label>
+                    <input id="confirmarSenhaAdmin" name="confirmarSenha" type="password"
+                        autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente" required>
+
+                    <button class="btn-login" type="submit">Solicitar cadastro</button>
+                </form>
+
+            </div>
+        </section>
+    </main>
+</body>
+</html>
