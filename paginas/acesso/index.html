@@ -1,173 +1,184 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="theme-color" content="#f5f7fb">
+    <title>Inovarc - Cidadão</title>
     <link rel="stylesheet" href="../../assets/css/acesso.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
-
-    <title>Inovarc - Cidadão</title>
+    <script src="../../assets/js/acesso.js" defer></script>
 </head>
-
 <body>
+    <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="icone-cidadao" viewBox="0 0 128 128">
+            <path d="M30 112c3-20 9-31 19-36l12-5 12 5c5 2 9 6 12 12" fill="none" stroke="#08a9e5" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+            <path d="M42 70c-5-5-8-13-8-23 0-16 10-26 24-26 8 0 14 3 18 9 5 7 4 17 2 26l-5 13-13 8-12-5z" fill="#08a9e5"/>
+            <path d="M39 48c6-2 10-7 12-13 6 7 15 10 27 10" fill="none" stroke="#087fc1" stroke-linecap="round" stroke-width="4"/>
+            <path d="M73 52l8-7 8 5-7 10M75 72l13-14 13 4-11 21-15 4" fill="none" stroke="#08a9e5" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+            <path d="M82 39h27a5 5 0 0 1 5 5v22a5 5 0 0 1-5 5H88l-9 7 2-11h1V44a5 5 0 0 1 5-5z" fill="#fff" stroke="#08a9e5" stroke-linejoin="round" stroke-width="4"/>
+            <circle cx="98" cy="55" r="7" fill="#dff7ff" stroke="#08a9e5" stroke-width="3"/>
+            <circle cx="108" cy="47" r="2.5" fill="#80d343"/>
+        </symbol>
+        <symbol id="icone-painel" viewBox="0 0 128 128">
+            <rect x="13" y="25" width="102" height="76" rx="8" fill="#fff" stroke="#159fe5" stroke-width="4"/>
+            <circle cx="44" cy="63" r="19" fill="#dff7ff" stroke="#159fe5" stroke-width="4"/>
+            <path d="M44 44a19 19 0 0 1 19 19H44z" fill="#159fe5"/>
+            <path d="M44 63V44M44 63h19" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3"/>
+            <path d="M76 47h5m8 0h15M76 63h5m8 0h15M76 79h5m8 0h15" fill="none" stroke="#159fe5" stroke-linecap="round" stroke-width="4"/>
+            <circle cx="78" cy="47" r="2" fill="#80d343"/>
+            <circle cx="78" cy="63" r="2" fill="#80d343"/>
+            <circle cx="78" cy="79" r="2" fill="#80d343"/>
+        </symbol>
+    </svg>
 
-    <img src="../../assets/img/logo.jpeg" alt="logo" class="logo">
+    <main class="pagina">
+        <header class="cabecalho">
+            <div class="logo-card" aria-label="Logo Inovarc">
+                <img src="../../assets/img/logo-inovarc.png" alt="" class="logo">
+                <span>INOVARC</span>
+            </div>
+            <h1 class="title">Inovarc Cidadão</h1>
+            <p class="subtitle">Sistema de Gestão de Problemas Urbanos</p>
+        </header>
 
-    <h1 class="title">Inovarc Cidadão</h1>
-
-    <h3 class="subtitle">
-        Sistema de Gestão de Problemas Urbanos
-    </h3>
-
-
-    <!-- ========================= -->
-    <!-- TELA DE ESCOLHA -->
-    <!-- ========================= -->
-
-    <div class="container d-flex" id="escolha">
-        
-        <!-- CIDADÃO -->
-        <div class="box" onclick="abrirLogin('cidadao')">
-
-            <img src="../../assets/img/cidadão.png" alt="cidadão">
-
-            <h2>Acesso Cidadão</h2>
-
-            <p>
-                Reporte problemas urbanos de forma rápida e simples
-                através do aplicativo mobile.
-            </p>
-
-            <ul class="lista">
-                <li>Tire foto do problema</li>
-                <li>Localização Automática</li>
-                <li>Acompanhe suas Solicitações</li>
-            </ul>
-            
-        </div>
-        <div id="overlay"></div>
-        
-        <!-- ADMINISTRADOR -->
-        <div class="box" onclick="abrirLogin('admin')">
-            
-            <img src="../../assets/img/painel.png" alt="painel">
-            
-            <h2>Painel Administrativo</h2>
-            
-            <p>
-                Gerencie, organize e resolva as solicitações
-                recebidas dos cidadãos.
-            </p>
-            
-            <ul class="lista">
-                <li>Dashboards com estatísticas</li>
-                <li>Gerencie status em tempo real</li>
-                <li>Visualize localização exata</li>
-            </ul>
-            
-        </div>
-        
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- ÁREA DE LOGIN -->
-    <!-- ========================= -->
-
-    <div class="login-container" id="login">
-
-        <div class="login-box">
-
-            <button class="voltar" onclick="voltar()">
-                ← Voltar
+        <section class="container" id="escolha" aria-label="Escolha o tipo de acesso">
+            <button class="box" type="button" data-abrir-login="cidadao">
+                <span class="imagem-acesso">
+                    <svg class="icone-acesso" aria-hidden="true"><use href="#icone-cidadao"></use></svg>
+                </span>
+                <h2>Acesso Cidadão</h2>
+                <p>Reporte problemas urbanos de forma rápida e simples através do aplicativo mobile.</p>
+                <ul class="lista">
+                    <li>Tire foto do problema</li>
+                    <li>Localização automática</li>
+                    <li>Acompanhe suas solicitações</li>
+                </ul>
             </button>
 
-
-            <!-- LOGIN CIDADÃO -->
-
-            <div id="loginCidadao" class="login-form">
-
-                <img src="../../assets/img/cidadão.png" alt="cidadão">
-
-                <h2>Acesso Cidadão</h2>
-
-                <p>
-                    Entre para acompanhar suas solicitações
-                </p>
-                <label for="email">E-mail:</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Ex: joaoexemplo@gmail.com"
-                >
-                <label for="senhaCidadao">Senha:</label>
-                <input
-                    type="password"
-                    id="senhaCidadao"
-                    placeholder="Senha"
-                >
-
-                <button class="btn-login" type="button" onclick="entrar('cidadao')">
-                    Entrar
-                </button>
-
-                <a href="#" class="esqueci">
-                    Esqueci minha senha
-                </a>
-                <a href="#" class="cadastrar">
-                    cadastre-se
-                </a>
-
-            </div>
-
-
-            <!-- LOGIN ADMIN -->
-
-            <div id="loginAdmin" class="login-form">
-
-                <img src="../../assets/img/painel.png" alt="administrador">
-
+            <button class="box" type="button" data-abrir-login="admin">
+                <span class="imagem-acesso">
+                    <svg class="icone-acesso" aria-hidden="true"><use href="#icone-painel"></use></svg>
+                </span>
                 <h2>Painel Administrativo</h2>
+                <p>Gerencie, organize e resolva as solicitações recebidas dos cidadãos.</p>
+                <ul class="lista">
+                    <li>Dashboards com estatísticas</li>
+                    <li>Gerencie status em tempo real</li>
+                    <li>Visualize localização exata</li>
+                </ul>
+            </button>
+        </section>
+    </main>
 
-                <p>
-                    Acesso restrito para gestores.
-                </p>
-                <label for="CNPJ">CNPJ:</label>
-                <input
-                    type="text" id="CNPJ"
-                    placeholder="00.000.000/0000-00:"
-                >
+    <div class="overlay" id="overlay"></div>
+
+    <section class="login-container" id="login" aria-label="Acesso à conta" aria-hidden="true">
+        <div class="login-box">
+            <button class="voltar" id="voltar" type="button">← Voltar</button>
+
+            <form id="loginCidadao" class="login-form" data-form="cidadao">
+                <svg class="imagem-formulario" aria-hidden="true"><use href="#icone-cidadao"></use></svg>
+                <h2>Acesso Cidadão</h2>
+                <p>Entre para acompanhar suas solicitações.</p>
+
+                <label for="emailCidadao">E-mail:</label>
+                <input id="emailCidadao" name="email" type="email" autocomplete="email"
+                    placeholder="Ex.: joaoexemplo@gmail.com" required>
+
+                <label for="senhaCidadao">Senha:</label>
+                <input id="senhaCidadao" name="senha" type="password" autocomplete="current-password"
+                    placeholder="Sua senha" required>
+
+                <button class="btn-login" type="submit">Entrar</button>
+                <a href="#" class="esqueci" data-aviso="A recuperação de senha precisa ser conectada ao sistema.">Esqueci minha senha</a>
+                <a href="#" class="cadastrar" data-abrir-cadastro="cidadao">Cadastre-se</a>
+            </form>
+
+            <form id="loginAdmin" class="login-form" data-form="admin">
+                <svg class="imagem-formulario" aria-hidden="true"><use href="#icone-painel"></use></svg>
+                <h2>Painel Administrativo</h2>
+                <p>Acesso restrito para gestores.</p>
+
+                <label for="cnpjLogin">CNPJ:</label>
+                <input id="cnpjLogin" name="cnpj" type="text" autocomplete="username"
+                    placeholder="00.000.000/0000-00" required>
+
                 <label for="senhaAdmin">Senha:</label>
-                <input
-                    type="password"
-                    id="senhaAdmin"
-                    placeholder="Senha:"
-                >
+                <input id="senhaAdmin" name="senha" type="password" autocomplete="current-password"
+                    placeholder="Sua senha" required>
 
-                <button class="btn-login" type="button" onclick="entrar('admin')">
-                    Entrar
-                </button>
+                <button class="btn-login" type="submit">Entrar</button>
+                <a href="#" class="esqueci" data-aviso="A recuperação de senha precisa ser conectada ao sistema.">Esqueci minha senha</a>
+                <a href="#" class="cadastrar" data-abrir-cadastro="admin">Faça seu cadastro</a>
+            </form>
 
-                <a href="#" class="esqueci">
-                    Esqueci minha senha
-                </a>
-                <a href="#" class="cadastrar">
-                    Faça seu cadastro
-                </a>
+            <form id="cadastroCidadao" class="login-form" data-form="cadastro-cidadao">
+                <svg class="imagem-formulario" aria-hidden="true"><use href="#icone-cidadao"></use></svg>
+                <h2>Cadastro Cidadão</h2>
+                <p>Crie sua conta para acompanhar suas solicitações.</p>
 
-            </div>
+                <label for="nomeCidadao">Nome completo:</label>
+                <input id="nomeCidadao" name="nome" type="text" autocomplete="name"
+                    placeholder="Seu nome completo" required>
 
+                <label for="emailCadastroCidadao">E-mail:</label>
+                <input id="emailCadastroCidadao" name="email" type="email" autocomplete="email"
+                    placeholder="seuemail@exemplo.com" required>
+
+                <label for="cpfCidadao">CPF:</label>
+                <input id="cpfCidadao" name="cpf" type="text" autocomplete="off"
+                    placeholder="000.000.000-00" required>
+
+                <label for="telefoneCidadao">Telefone:</label>
+                <input id="telefoneCidadao" name="telefone" type="tel" autocomplete="tel"
+                    placeholder="(00) 00000-0000" required>
+
+                <label for="senhaCadastroCidadao">Senha:</label>
+                <input id="senhaCadastroCidadao" name="senha" type="password"
+                    autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
+
+                <label for="confirmarSenhaCidadao">Confirme sua senha:</label>
+                <input id="confirmarSenhaCidadao" name="confirmarSenha" type="password"
+                    autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente" required>
+
+                <button class="btn-login" type="submit">Criar conta</button>
+            </form>
+
+            <form id="cadastroAdmin" class="login-form" data-form="cadastro-admin">
+                <svg class="imagem-formulario" aria-hidden="true"><use href="#icone-painel"></use></svg>
+                <h2>Cadastro Administrativo</h2>
+                <p>Informe os dados da instituição e do responsável.</p>
+
+                <label for="instituicaoAdmin">Nome da instituição:</label>
+                <input id="instituicaoAdmin" name="instituicao" type="text"
+                    placeholder="Nome da prefeitura ou órgão" required>
+
+                <label for="cnpjCadastroAdmin">CNPJ:</label>
+                <input id="cnpjCadastroAdmin" name="cnpj" type="text" autocomplete="off"
+                    placeholder="00.000.000/0000-00" required>
+
+                <label for="responsavelAdmin">Nome do responsável:</label>
+                <input id="responsavelAdmin" name="responsavel" type="text" autocomplete="name"
+                    placeholder="Nome completo" required>
+
+                <label for="emailAdmin">E-mail institucional:</label>
+                <input id="emailAdmin" name="email" type="email" autocomplete="email"
+                    placeholder="nome@instituicao.gov.br" required>
+
+                <label for="senhaCadastroAdmin">Senha:</label>
+                <input id="senhaCadastroAdmin" name="senha" type="password"
+                    autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
+
+                <label for="confirmarSenhaAdmin">Confirme sua senha:</label>
+                <input id="confirmarSenhaAdmin" name="confirmarSenha" type="password"
+                    autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente" required>
+
+                <button class="btn-login" type="submit">Solicitar cadastro</button>
+            </form>
         </div>
-
-    </div>
-
-
-    <script src="../../assets/js/login.js"></script>
+    </section>
 </body>
-
 </html>

@@ -1,138 +1,104 @@
 # Inovarc
 
-Sistema de gestão de problemas urbanos. O cidadão registra uma ocorrência, com descrição, local e foto. O administrador acompanha essas ocorrências no painel e muda o status.
+Sistema de gestão de problemas urbanos. O cidadão registra uma ocorrência. O administrador acompanha e atualiza o status no painel.
 
-Hoje o site é HTML, CSS e JavaScript e abre no navegador, sem servidor. O banco de dados ainda não está criado. O modelo conceitual abaixo é o que será implementado.
+O site está em HTML, CSS e JavaScript. Ainda não há servidor nem banco. O modelo conceitual do banco já está desenhado e fica em `docs/modelo-er.png`.
 
-![Modelo entidade-relacionamento do Inovarc](docs/modelo-er.png)
+## O que mostrar no GitHub
 
-## O que mudou no site:
+A branch `main` é a versão organizada do projeto, com as telas, os arquivos separados e o modelo do banco.
 
-- A entrada do site ficou em `index.html`, que abre a tela de acesso.
-- Imagens, CSS e JavaScript foram para `assets/`.
-- Cada tela ficou em `paginas/`, com o próprio `index.html`.
-- A tela de acesso liga o login do administrador ao painel. O botão Voltar do painel volta para essa tela.
-- O cabeçalho do painel foi colocado dentro do `body`, e um fechamento de `div` que sobrava no card de pendentes foi removido.
-- As telas que ainda estão em desenvolvimento foram mantidas: home, portal, login e a página de serviços.
+A branch `kawan` tem a tela de acesso refeita em um único conjunto de arquivos: `index.html`, `style2.css`, `script.js` e `logo-inovarc.png`. Nessa branch entraram duas telas que a `main` ainda não tinha: cadastro do cidadão e cadastro administrativo.
 
-`assets/js/login.js` atende só a tela de acesso. `assets/js/logar.js` atende o formulário de `paginas/login`. Os dois não foram unidos para uma tela não usar a função da outra.
+Essas telas da `kawan` foram trazidas para a `main` e encaixadas na pasta do projeto. O painel, as telas em desenvolvimento e o modelo do banco continuam na `main`.
 
-## Como abrir
+No vídeo, vale abrir o seletor de branches e mostrar essa diferença antes de entrar nas pastas.
 
-Abra `index.html`. Para ver uma tela isolada, abra o `index.html` da pasta dela.
+## Como o repositório está organizado
 
 ```
-index.html
+index.html                      abre a tela de acesso
 paginas/
-  acesso/index.html       escolha entre cidadão e administrador, com login
-  painel/index.html       painel de ocorrências
-  home/index.html         tela inicial em desenvolvimento
-  portal/index.html       outra versão da escolha, em desenvolvimento
-  login/index.html        login separado, em desenvolvimento
-  login/servicos.html     destino provisório desse login
+  acesso/index.html             escolha, login e cadastros
+  painel/index.html             painel de ocorrências
+  home/index.html               tela inicial em desenvolvimento
+  portal/index.html             outra versão da escolha, em desenvolvimento
+  login/index.html              login separado, em desenvolvimento
+  login/servicos.html           destino provisório desse login
 assets/
-  css/                    estilo de cada tela
-  img/                    logo, fundo e ícones
-  js/login.js             script da tela de acesso
-  js/logar.js             script do login separado
-docs/
-  modelo-er.png           modelo conceitual do banco
+  css/acesso.css                visual da tela de acesso, vindo da kawan
+  css/painel.css                visual do painel
+  img/logo-inovarc.png          logo usado na tela de acesso
+  js/acesso.js                  navegação e validação da tela de acesso
+  js/login.js                   script antigo da tela de acesso
+  js/logar.js                   script do login separado
+docs/modelo-er.png              modelo entidade-relacionamento
 ```
 
-## Telas e o que cada uma faz hoje
+Abra `index.html` no navegador. Ele leva para `paginas/acesso/index.html`.
 
-### Acesso
+## Telas que entraram da branch kawan
 
-`paginas/acesso/index.html`, estilo em `assets/css/acesso.css`.
+A tela de acesso deixou de ser só dois cards com login. Agora o mesmo arquivo reúne quatro formulários:
 
-Dois cards abrem o formulário correspondente.
+- Login do cidadão, com e-mail e senha.
+- Login do administrador, com CNPJ e senha.
+- Cadastro do cidadão, com nome, e-mail, CPF, telefone e senha.
+- Cadastro administrativo, com instituição, CNPJ, responsável, e-mail institucional e senha.
 
-- Cidadão: e-mail e senha. Com os campos preenchidos, a tela avisa que o acompanhamento é pelo aplicativo. A página web do cidadão ainda não existe.
-- Administrador: CNPJ e senha. Com os campos preenchidos, abre o painel.
-- Voltar fecha o formulário e mostra os cards outra vez.
+O botão Cadastre-se abre o formulário correspondente. Voltar, no cadastro, retorna ao login. Voltar, no login, retorna aos cards. A recuperação de senha avisa que ainda depende de servidor.
 
-"Esqueci minha senha" e "cadastre-se" ainda não têm destino.
+A adaptação feita na `main`: o login do administrador, com os campos preenchidos, abre `paginas/painel/index.html`. O login do cidadão avisa que o acompanhamento é pelo aplicativo, porque essa página web ainda não existe. No cadastro, as senhas são conferidas. Se forem diferentes, a conta não segue. Se forem iguais, a tela avisa que a conta só será criada quando houver servidor.
 
-### Painel
+A home em desenvolvimento aponta para essa tela de acesso. Antes os cards dela iam para `cadastro.html`, um arquivo que não existia.
 
-`paginas/painel/index.html`, estilo em `assets/css/painel.css`.
+## O que já existia na main
 
-Mostra totais por status e uma tabela de ocorrências. Busca, filtro, números e linhas estão fixos no HTML. Não vêm do login nem de um banco. "Ver detalhes" ainda não abre outra página. Voltar retorna à tela de acesso.
+- O painel administrativo, com totais por status e a tabela de ocorrências. Busca, filtro e linhas ainda estão fixos no HTML. Ver detalhes ainda não abre outra página. Voltar retorna à tela de acesso.
+- As telas `home`, `portal` e `login`, guardadas porque ainda estão em desenvolvimento.
+- O login separado em `paginas/login`, que entra com usuário `admin` e senha `123456` e abre `servicos.html`. Essa senha está no JavaScript só para testar a navegação.
+- O modelo do banco em `docs/modelo-er.png`.
 
-### Telas em desenvolvimento
-
-- `paginas/home/index.html`: mesma escolha da entrada. Os dois cards apontam para `cadastro.html`, arquivo que ainda não existe.
-- `paginas/portal/index.html`: os dois cards abrem o mesmo login.
-- `paginas/login/index.html`: entra com usuário `admin` e senha `123456` e abre `servicos.html`. Outro dado mostra erro. A senha está no JavaScript só para testar a navegação.
-- `paginas/login/servicos.html`: exibe "entrei". É o espaço da futura tela de serviços.
+`assets/js/login.js` ficou no repositório como o script anterior da tela de acesso. A página de acesso agora usa `assets/js/acesso.js`.
 
 ## Banco de dados que será implementado
 
-O desenho é um modelo entidade-relacionamento. A cardinalidade ao lado de cada entidade indica quantas vezes ela participa daquele relacionamento.
+O desenho está em `docs/modelo-er.png`. A cardinalidade ao lado de cada entidade diz quantas vezes ela participa do relacionamento.
 
-### Entidades
+Entidades:
 
-**USUARIO** registra a ocorrência. Atributos: `id_usuario`, `Nome`, `CPF`, `senha` e `perfil`. Se especializa em **Pessoa física** e **Pessoa jurídica**. Os subtipos ainda não têm atributos próprios.
+- **USUARIO**: `id_usuario`, `Nome`, `CPF`, `senha` e `perfil`. Se especializa em pessoa física e pessoa jurídica.
+- **OCORRENCIA**: `id_ocorrencia`, `descricao`, `localizacao`, `data_registro` e `Foto`. O status é um atributo composto, com `id_status`, `descrição` e `nome`.
+- **CATEGORIA**: `id_categoria`, `nome` e `descricao`.
+- **IMAGEM**: `id_imagem` e `url`.
+- **GERENCIADOR DE OCORRENCIAS**: o sistema, com `id_gerenciador`, `nome do sistema` e `versao`.
+- **ADMINISTRADOR**: `id_adm`, `email`, `senha` e `cargo`.
 
-**OCORRENCIA** é o problema urbano. Atributos: `id_ocorrencia`, `descricao`, `localizacao`, `data_registro` e `Foto`. O atributo `Status` é composto, com `id_status`, `descrição` e `nome`.
+Relacionamentos do desenho:
 
-**CATEGORIA** classifica a ocorrência. Atributos: `id_categoria`, `nome` e `descricao`.
+- `registra`: usuário (1,1) e ocorrência (1,n). Também tem o atributo `problemas urbanos diversos`.
+- `classifica`: ocorrência (1,1) e categoria (1,1).
+- `possui`: ocorrência (1,n) e imagem (1,1).
+- `gerencia`: ocorrência (1,1) e gerenciador (1,n).
+- `opera`: gerenciador (1,1) e administrador (1,n).
 
-**IMAGEM** guarda o arquivo da ocorrência. Atributos: `id_imagem` e `url`.
+Na implementação, cada entidade vira tabela. `status` vira tabela própria, porque tem identificador e se repete em várias ocorrências. A foto fica em `imagem`, para não guardar o mesmo arquivo também dentro da ocorrência.
 
-**GERENCIADOR DE OCORRENCIAS** é o sistema, não uma pessoa. Atributos: `id_gerenciador`, `nome do sistema` e `versao`.
-
-**ADMINISTRADOR** opera esse sistema. Atributos: `id_adm`, `email`, `senha` e `cargo`.
-
-### Relacionamentos
-
-| Relacionamento | Participação | Leitura do desenho |
-|---|---|---|
-| registra | USUARIO (1,1) e OCORRENCIA (1,n) | cada usuário registra uma ocorrência; cada ocorrência pode ser registrada por vários usuários |
-| classifica | OCORRENCIA (1,1) e CATEGORIA (1,1) | uma ocorrência tem uma categoria, e uma categoria classifica uma ocorrência |
-| possui | OCORRENCIA (1,n) e IMAGEM (1,1) | uma ocorrência tem várias imagens; cada imagem pertence a uma ocorrência |
-| gerencia | OCORRENCIA (1,1) e GERENCIADOR (1,n) | cada ocorrência é gerenciada por um gerenciador; o gerenciador trata várias ocorrências |
-| opera | GERENCIADOR (1,1) e ADMINISTRADOR (1,n) | cada gerenciador é operado por vários administradores; cada administrador opera um gerenciador |
-
-O relacionamento `registra` também tem o atributo `problemas urbanos diversos`.
-
-### Tabelas previstas
-
-Na passagem para o banco relacional, cada entidade vira tabela. O identificador com bolinha preenchida vira chave primária. O lado (1,1) de um relacionamento recebe a chave estrangeira do outro lado.
-
-- `usuario`: dados do cidadão, com uma coluna para dizer se é pessoa física ou jurídica.
-- `administrador`: login do painel, separado do cidadão.
-- `gerenciador`: o sistema que o administrador opera. A ocorrência guarda o `id_gerenciador`.
-- `categoria`: tipos de problema, como buraco, iluminação e lixo.
-- `status`: sai do atributo composto de ocorrência, porque tem identificador próprio e o mesmo status vale para várias linhas. A ocorrência guarda o `id_status`.
-- `ocorrencia`: descrição, localização, data, usuário, categoria, status e gerenciador.
-- `imagem`: url da foto e o `id_ocorrencia`.
-
-### Ligação com as telas
+Ligação com as telas:
 
 | Tela | Dado do modelo |
 |---|---|
-| Acesso do cidadão | `usuario` |
-| Acesso do administrador | `administrador` |
-| Cards do painel (pendente, em análise, em andamento, concluído) | `status` |
-| Linha da tabela (categoria, local, descrição, status, data) | `ocorrencia` com `categoria` e `status` |
+| Cadastro e login do cidadão | `usuario` |
+| Cadastro e login do administrador | `administrador` |
+| Cards e tabela do painel | `ocorrencia`, `categoria` e `status` |
 | Foto do relato | `imagem` |
-| Nome do sistema no cabeçalho | `gerenciador` |
 
-## O que confirmar antes de criar as tabelas
+Antes de escrever o script do banco, confirmar duas cardinalidades do desenho. No uso do sistema, um cidadão registra várias ocorrências e uma categoria serve para várias ocorrências. No desenho, `registra` e `classifica` estão mais restritos do que isso. A tela pede CNPJ no cadastro administrativo, e o modelo do administrador tem e-mail, senha e cargo. O CNPJ ainda não está na entidade.
 
-Estes pontos estão no desenho e mudam o script do banco. Vale decidir na apresentação ou logo depois dela.
+## Roteiro curto para o vídeo
 
-- Em `registra`, o uso esperado do sistema é um cidadão registrar várias ocorrências, e cada ocorrência ter um só autor. No desenho, a cardinalidade está invertida em relação a isso.
-- Em `classifica`, uma categoria como "Buraco / Asfalto" precisa servir a várias ocorrências. No desenho, categoria e ocorrência estão (1,1).
-- `Foto` em ocorrência e a entidade `IMAGEM` guardam a mesma coisa. Na implementação, a foto fica só em `imagem`.
-- A tela de acesso pede CNPJ do administrador. No modelo, CNPJ não aparece: `usuario` tem CPF, e pessoa jurídica não tem atributos. `administrador` entra com e-mail e senha.
-- `problemas urbanos diversos` está no relacionamento `registra`. Se for só o assunto da ocorrência, esse dado já cabe em `descricao` e `categoria`.
-
-## Próximos passos
-
-1. Fechar as cardinalidades de `registra` e `classifica`.
-2. Escrever o script das tabelas a partir da lista acima.
-3. Escolher a tela de entrada que fica no ar. Hoje `acesso`, `home` e `portal` repetem a mesma escolha.
-4. Criar `cadastro.html`, a página do cidadão e a tela de detalhe da ocorrência.
-5. Trocar os dados fixos do painel pela consulta ao banco, quando o servidor existir.
+1. Mostrar o repositório e as branches `main` e `kawan`.
+2. Explicar que a `kawan` trouxe a tela de acesso refeita e os dois cadastros, e que isso foi encaixado na `main`.
+3. Abrir as pastas `paginas`, `assets` e `docs`.
+4. No navegador, mostrar a escolha, o login, o cadastro e a entrada no painel pelo administrador.
+5. Abrir `docs/modelo-er.png` e nomear as entidades e o que cada tela vai gravar quando o banco existir.
