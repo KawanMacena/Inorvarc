@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de ocorrêcias</title>
+    <link rel="stylesheet" href="../css/gerenciamento.css">
+   <!-- Biblioteca para Gerar PDF -->
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" 
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" 
+        defer>
+    </script>
+   
+
+    <!-- FONTE -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+    <script src="../js/geren.js" defer></script>
+</head>
+
+<body>
+    <!---CABEÇALHO-->
+    <header class="cabecalho">
+        <div class="indetificacao">                
+            <img src="../img/logo2.png" class="logo2">
+            <img src="../img/logo1.png" class="logo1">
+        </div>
+
+        <div class="perfil no-print">AD</div>
+    </header>
+    
+        <main class="container">
+            <!-- FOTO DO PROBLEMA -->
+            <section class="card foto-problema">
+            
+                <h2>Foto do Problema</h2>
+            
+                <div class="imagem-ocorrencia">
+                    <img src="" alt="Foto do problema">
+                    <p>Foto encaminhada pelo cidadão</p>
+                    <span>Categoria:</span>
+                </div>
+            
+            </section>
+        
+        
+            <!-- LOCALIZAÇÃO -->
+            <section class="card localizacao">
+            
+                <h2>Localização Exata</h2>
+            
+                <div class="endereco">
+                    <span>📍 Endereço</span>
+                    <p>Mapa geográfico:</p>
+                </div>
+
+                <div class="mapa">
+                    <div class="marcador">📍</div>
+                    <a href="#" target="_blank"> Abrir no Google Maps → </a>
+                </div>
+            
+            </section>
+        
+        
+            <!-- DETALHES DA SOLICITAÇÃO -->
+            <section class="card detalhes">
+            
+                <h2>Detalhes da Solicitação</h2>
+            
+                <div class="informacao">
+                    <span>Descrição do Cidadão</span>
+                    <p></p>
+                </div>
+            
+                <div class="informacao">
+                    <span>Data de Recebimento</span>
+                    <p></p>
+                </div>
+                
+                <div class="informacao">
+                    <span>Reportado por</span>
+                    <p>Cidadão Anônimo</p>
+                </div>
+                
+            </section>
+            
+            <!-- NOTAS INTERNAS -->
+            <section class="card notas">
+                
+                <h2>Notas Internas</h2>
+                
+                <textarea placeholder="Escreva Aqui!"></textarea>
+            
+                <button class="salvar-notas">Salvar Notas</button>
+            
+            </section>
+        
+            <!-- GERENCIAR STATUS -->
+            <section class="card gerenciamento">
+                
+                <h2>Gerenciar Status</h2>
+                
+                <label>Status Atual</label>
+                
+                <div class="status-atual"></div>
+                
+                <label>Atualizar para:</label>
+                
+                <div class="opcoes-status">
+                    
+                    <button>Pendente</button>
+                    <button>Em Análise</button>
+                    <button>Em Andamento</button>
+                    <button>Concluído</button>
+                    
+                </div>
+
+            </section>
+            <!-- AÇÕES RÁPIDAS -->
+            <section class="card acoes no-print">
+                
+                <h2>Ações Rápidas</h2>
+                
+                <button class="atribuir">Atribuir Equipe</button>
+                
+                <button onclick="downloadPDF()" class="imprimir">Imprimir Relatório </button>
+                
+                <button class="compartilhar">Compartilhar </button>
+                
+                <button class="voltar">Voltar</button>
+                
+            </section>  
+        </main>
+        
+    </div>
+</body>
+</html>

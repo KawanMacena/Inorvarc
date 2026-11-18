@@ -1,0 +1,334 @@
+
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lexend", sans-serif;
+}
+
+body {
+    background:#babcc7;
+    color: #e3e7e9;
+    min-height: 100vh;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* CABEÇALHO */
+.cabecalho {
+    background: linear-gradient(170deg,rgba(18, 55, 190, 0.87) 0%, rgb(78, 211, 116) 78%, rgb(181, 192, 29) 100%);
+    color: white;
+
+    width: 100%;
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo2 {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    margin-left: 25px;
+    position: absolute;
+}
+
+.logo1 {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    margin-left: 25px;
+    object-fit: cover;
+}
+
+
+.identificacao img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.perfil {
+    background: #F2B705;
+    color: #172D4B;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+/* CARTÕES */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    color: #172D4B;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #F2B705;
+    padding-bottom: 10px;
+}
+
+/* FOTO DO PROBLEMA */
+.imagem-ocorrencia {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.imagem-ocorrencia img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.imagem-ocorrencia p {
+    color: #a39393;
+    font-size: 14px;
+}
+
+.imagem-ocorrencia span {
+    background: #ebe2be;
+    color: #8A6500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: fit-content;
+    font-size: 14px;
+}
+
+/* LOCALIZAÇÃO */
+.endereco {
+    margin-bottom: 18px;
+    line-height: 1.8;
+}
+
+.endereco span {
+    font-weight: bold;
+    color: #172D4B;
+}
+
+.endereco p {
+    color: #777;
+    font-size: 14px;
+}
+
+.mapa {
+    min-height: 250px;
+    background: #E8E8E8;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.marcador {
+    font-size: 35px;
+}
+
+.mapa a {
+    color: #172D4B;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* DETALHES DA SOLICITAÇÃO */
+.informacao {
+    padding: 12px 0;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.informacao span {
+    display: block;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.informacao p {
+    color: #263238;
+    font-size: 16px;
+}
+
+/* GERENCIAR STATUS */
+.gerenciamento label {
+    display: block;
+    font-weight: bold;
+    margin: 15px 0 10px;
+    color: #172D4B;
+}
+
+.status-atual {
+    background: #FFF3CC;
+    padding: 12px;
+    border-radius: 8px;
+    color: #8A6500;
+    font-weight: bold;
+    min-height: 42px;
+}
+
+.opcoes-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.opcoes-status button {
+    padding: 10px 16px;
+    border: 1px solid #DDD;
+    background: white;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.opcoes-status button:hover {
+    background: #FFF3CC;
+    border-color: #F2B705;
+}
+
+.opcoes-status button.selecionado {
+    background: #172D4B;
+    color: white;
+    border-color: #172D4B;
+}
+
+/* NOTAS INTERNAS */
+.notas textarea {
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    padding: 15px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+}
+
+.notas textarea:focus {
+    border-color: #F2B705;
+}
+
+.salvar-notas {
+    margin-top: 12px;
+    padding: 12px 20px;
+    background: #172D4B;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* AÇÕES RÁPIDAS */
+.acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.acoes h2 {
+    width: 100%;
+}
+
+.acoes button {
+    padding: 13px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.atribuir {
+    background: #172D4B;
+    color: white;
+}
+
+.imprimir {
+    background: #F2B705;
+    color: #172D4B;
+}
+
+.compartilhar {
+    background: #E9EDF2;
+    color: #172D4B;
+}
+
+.voltar {    
+    background-color: #eb7304;
+    color: white;
+}
+
+.acoes button:hover,
+.salvar-notas:hover {
+    opacity: 0.85;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 600px) {
+
+    .container {
+        width: 94%;
+        margin: 15px auto;
+        gap: 15px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .cabecalho {
+        padding: 15px;
+    }
+
+    .identificacao {
+        font-size: 16px;
+    }
+
+    .opcoes-status {
+        flex-direction: column;
+    }
+
+    .opcoes-status button {
+        width: 100%;
+    }
+}
+/* Esconde a barra de rolagem (scrollbar) */
+html {
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+html::-webkit-scrollbar {
+    display: none; 
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+}

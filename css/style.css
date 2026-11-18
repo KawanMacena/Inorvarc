@@ -1,0 +1,480 @@
+/* remover margens de todos os elementos */
+*{
+padding: 0px;
+margin: 0px;
+
+}
+/* Permitir Rolar a tela se necessario */
+html, body {
+    overflow-y: auto;
+}
+
+body {
+    text-align: center;
+    background: linear-gradient(135deg, #001447, #0A4F8A, #37B89B, #8AD143);
+    background-attachment: fixed;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+}
+
+/* Logo de fundo Inovarc */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(fundo.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4; /* Ajuste a opacidade aqui */
+  z-index: -1; /* Garante que fica atrás de tudo */
+}
+
+
+
+.title {
+    margin: 15px;
+    font-family:'Poppins', sans-serif;
+    font-weight: 700;
+    color: whitesmoke;
+}
+
+.subtitle {
+    font-family: 'Lexend', sans-serif;
+    font-size: 18px;
+    font-weight: 200;
+    color: #eeeeee8b;
+    margin-top: -10px;
+}
+
+.container {    
+    max-width: 100vw;
+   
+}
+
+.d-flex {
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+a.link-box {
+    text-decoration: none;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+   
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    
+   
+    height: 400px;
+    max-width:450px;
+
+    padding: 15px;
+    margin: 20px;
+
+    overflow: hidden;   
+    background: white;
+
+    transition: 0.3s ease;
+    cursor: pointer;
+
+}
+
+.box:hover{
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.box h2 {
+    font-family:"Lexend", sans-serif;
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #0A4F8A;
+}
+
+.box p {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 15px;
+    font-family:"Lexend", sans-serif;
+    text-align: center;
+}
+
+.box ul {
+    font-family: "Lexend", sans-serif;
+    font-size: 16px;
+    
+    color:  #555;
+}
+
+
+.box ul li::marker{
+    color: #8AD143;
+    font-size: 20px;
+    text-align: center;
+}
+.box img {
+    height: 150px;
+    align-self: center;
+    border-radius: 10px;
+}
+
+.lista{
+    list-style-position: inside;
+}
+
+.logo{
+    height: 90px;
+    align-items: 70px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+
+
+/* ========================= */
+/* ÁREA DE LOGIN */
+/* ========================= */
+
+.login-container {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+
+    opacity: 0;
+    visibility: hidden;
+    
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 15px 0;
+    
+    transition:
+        opacity 0.5s ease,
+        visibility 0.5s;
+
+        z-index: 20;
+
+
+}
+
+
+/* LOGIN APARECENDO */
+
+.login-container.mostrar {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========================= */
+/* CAIXA DE LOGIN */
+/* ========================= */
+
+.login-box {
+
+    width: 380px;
+    max-width: 85%;
+
+    margin: auto;
+    padding: 35px;
+
+    background: white;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35);
+
+}
+
+/* ========================= */
+/* FORMULÁRIOS */
+/* ========================= */
+
+.login-form {
+
+    display: none;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    animation: aparecer 0.5s ease;
+
+
+}
+
+
+.login-form.ativo {
+
+    display: flex;
+
+}
+
+
+.login-form img {
+
+    width: 100px;
+    height: 100px;
+
+    object-fit: contain;
+
+    margin-bottom: 15px;
+
+}
+
+
+.login-form h2 {
+
+    font-family: "Lexend", sans-serif;
+
+    color: #0A4F8A;
+
+    margin-bottom: 8px;
+
+}
+
+
+.login-form p {
+
+    font-family: "Lexend", sans-serif;
+
+    font-size: 14px;
+
+    color: #1a1919;
+
+    margin-bottom: 25px;
+
+}
+
+.login-form label{
+    display: block !important;
+    width: 100%;
+    text-align: left !important;
+    color: #0A4F8A !important;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+
+/* ========================= */
+/* INPUTS */
+/* ========================= */
+
+.login-form input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    margin-bottom: 15px;
+
+    border: 2px solid #252424;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-family: "Lexend", sans-serif;
+
+    transition: 0.3s;
+
+}
+
+
+.login-form input:focus {
+
+    border-color: #37B89B;
+
+    box-shadow:
+        0 0 0 3px rgba(55, 184, 155, 0.15);
+
+}
+
+
+/* ========================= */
+/* BOTÃO LOGIN */
+/* ========================= */
+
+.btn-login {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0A4F8A,
+            #37B89B
+        );
+
+    color: white;
+
+    font-family: "Lexend", sans-serif;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.btn-login:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(10, 79, 138, 0.3);
+
+}
+
+
+/* ========================= */
+/* ESQUECI SENHA */
+/* ========================= */
+
+.esqueci {
+
+    margin-top: 18px;
+
+    font-family: "Lexend", sans-serif;
+
+    font-size: 13px;
+
+    color: #0A4F8A;
+
+    text-decoration: none;
+
+}
+
+
+.esqueci:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* ========================= */
+/* BOTÃO VOLTAR */
+/* ========================= */
+
+.voltar {
+
+    border: none;
+
+    background: transparent;
+
+    color: #555;
+
+    font-family: "Lexend", sans-serif;
+
+    cursor: pointer;
+
+    margin-bottom: 15px;
+
+    transition: 0.3s;
+
+}
+
+
+.voltar:hover {
+
+    color: #0A4F8A;
+
+    transform: translateX(-4px);
+
+}
+
+
+/* ========================= */
+/* ANIMAÇÃO */
+/* ========================= */
+
+@keyframes aparecer {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(25px) scale(0.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+
+}
+.cadastrar {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 14px;
+    background: linear-gradient(90deg, #0A4F8A, #37B89B);
+    color: white;
+    font-family: "Lexend", sans-serif;
+    font-size: 14px;                                     
+    font-weight: 500;   
+    border-radius: 12px;
+    transition: 0.2s;
+    text-decoration: none;
+}
+.cadastrar:hover {
+    background-color: #0A4F8A;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(19, 18, 18, 0.3);
+    transform: scale(1.05);
+}
+
+/* Blur com Desfoque */
+#overlay {
+    position: fixed;
+    inset: 0;
+
+    background:rgb(0,0,0,0.30);
+    backdrop-filter: blur(6px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.4s ease;
+    z-index: 10;
+}
+
+#overlay.ativo{
+    opacity: 1;
+}
