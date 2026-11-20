@@ -1,5 +1,4 @@
-// Só a chave publicável (anon) pode ficar aqui. A chave service_role / secret ignora o RLS e nunca vai para o front-end.
-window.INOVARC_SUPABASE = Object.freeze({
-    url: "https://SEU-PROJETO.supabase.co",
-    chavePublica: "SUA-CHAVE-PUBLICAVEL"
-});
+// Dados do projeto no Supabase (Project Settings > API).
+// Aqui só vai a chave publicável. A chave secret/service_role NUNCA pode ficar neste arquivo.
+const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
+const SUPABASE_CHAVE = "SUA-CHAVE-PUBLICAVEL";

@@ -1,25 +1,12 @@
--- Inovarc: esquema inicial a partir do DER.
--- Rode uma vez no SQL Editor do Supabase (ou com `supabase db push`).
---
--- Regras de segurança que este arquivo garante:
---   * Senhas nunca ficam nas tabelas públicas: o Supabase Auth guarda o hash em auth.users.
---   * Toda tabela tem RLS. Sem política, ninguém lê nem escreve.
---   * O cliente só recebe privilégio nas colunas que pode preencher. Status, datas, ids e dono
---     da ocorrência são definidos pelo banco.
---   * Administrador só existe depois de aprovado manualmente (coluna aprovado).
---   * O histórico de status é gravado só por trigger, então não dá para forjar.
+-- Banco do Inovarc, montado a partir do DER.
+-- Rode uma vez no SQL Editor do Supabase.
+-- As senhas ficam no Supabase Auth (auth.users), por isso não aparecem nestas tabelas.
 
-
--- =====================================================================
--- TIPOS
--- =====================================================================
-
+-- Tipos
 create type public.status_ocorrencia as enum ('pendente', 'em_analise', 'em_andamento', 'concluido');
 
 
--- =====================================================================
--- TABELAS
--- =====================================================================
+-- Tabelas
 
 create table public.usuario (
     id_usuario uuid primary key references auth.users (id) on delete cascade,
@@ -100,12 +87,11 @@ create index nota_ocorrencia_ocorrencia_idx on public.nota_ocorrencia (id_ocorre
 create index nota_ocorrencia_id_adm_idx on public.nota_ocorrencia (id_adm);
 
 
--- =====================================================================
--- FUNÇÕES E TRIGGERS
--- =====================================================================
+-- Funções e triggers
 
--- security definer para consultar administrador sem passar pelo RLS da própria tabela (evita recursão).
-create function public.is_admin()
+-- Diz se quem está logado é um administrador aprovado.
+-- Usa security definer para ler a tabela administrador sem passar pelo RLS dela (senão entra em loop).
+create function public.eh_administrador()
 returns boolean
 language sql
 stable
@@ -120,12 +106,13 @@ as $$
     );
 $$;
 
-revoke execute on function public.is_admin() from public, anon;
-grant execute on function public.is_admin() to authenticated;
+revoke execute on function public.eh_administrador() from public, anon;
+grant execute on function public.eh_administrador() to authenticated;
 
 
--- Cria o perfil de quem se cadastra (e-mail/senha ou Google).
--- raw_user_meta_data vem do navegador, então nada dele dá permissão: o administrador nasce sem aprovação.
+-- Cria o perfil de quem se cadastra (com e-mail e senha ou com Google).
+-- Os dados em raw_user_meta_data vêm do navegador, então não dá para confiar neles para liberar acesso:
+-- quem se cadastra como administrador sempre começa sem aprovação.
 create function public.criar_perfil_usuario()
 returns trigger
 language plpgsql
@@ -135,10 +122,10 @@ as $$
 declare
     dados jsonb;
     nome_usuario text;
-    eh_administrador boolean;
+    cadastro_admin boolean;
 begin
     dados := coalesce(new.raw_user_meta_data, '{}'::jsonb);
-    eh_administrador := coalesce(dados ->> 'tipo', '') = 'administrador';
+    cadastro_admin := coalesce(dados ->> 'tipo', '') = 'administrador';
 
     nome_usuario := left(btrim(coalesce(dados ->> 'nome', dados ->> 'full_name', dados ->> 'name', '')), 120);
     if char_length(nome_usuario) < 2 then
@@ -149,9 +136,9 @@ begin
     end if;
 
     insert into public.usuario (id_usuario, nome, perfil)
-    values (new.id, nome_usuario, case when eh_administrador then 'administrador' else 'cidadao' end);
+    values (new.id, nome_usuario, case when cadastro_admin then 'administrador' else 'cidadao' end);
 
-    if eh_administrador then
+    if cadastro_admin then
         insert into public.administrador (id_adm, nome, email, cnpj, instituicao)
         values (
             new.id,
@@ -211,7 +198,8 @@ when (old.status_atual is distinct from new.status_atual)
 execute function public.registrar_historico_status();
 
 
--- Fica em trigger e não na política de imagem: contar a própria tabela dentro da política gera recursão.
+-- Limite de 5 fotos por ocorrência. Está num trigger porque a política da própria tabela
+-- não pode contar as linhas dela (dá erro de recursão).
 create function public.limitar_imagens_por_ocorrencia()
 returns trigger
 language plpgsql
@@ -236,7 +224,8 @@ before insert on public.imagem
 for each row execute function public.limitar_imagens_por_ocorrencia();
 
 
--- Registra ocorrência e localização juntas. security invoker: valem as permissões e o RLS de quem chama.
+-- Registra a ocorrência e a localização de uma vez.
+-- Usa security invoker, então vale o que o próprio usuário tem permissão de fazer.
 create function public.registrar_ocorrencia(
     p_id_categoria integer,
     p_descricao text,
@@ -269,11 +258,9 @@ revoke execute on function public.registrar_ocorrencia(integer, text, text, nume
 grant execute on function public.registrar_ocorrencia(integer, text, text, numeric, numeric) to authenticated;
 
 
--- =====================================================================
--- PRIVILÉGIOS
--- O Supabase concede tudo a anon e authenticated por padrão. Aqui fica só o necessário,
--- e o RLS decide quais linhas cada um enxerga.
--- =====================================================================
+-- Permissões
+-- O Supabase libera tudo para anon e authenticated por padrão.
+-- Tiramos tudo e devolvemos só o necessário, coluna por coluna.
 
 revoke all on
     public.usuario, public.administrador, public.categoria, public.ocorrencia,
@@ -295,9 +282,7 @@ grant insert (id_ocorrencia, url) on public.imagem to authenticated;
 grant insert (id_ocorrencia, conteudo) on public.nota_ocorrencia to authenticated;
 
 
--- =====================================================================
--- RLS
--- =====================================================================
+-- RLS (quem pode ver e mexer em cada linha)
 
 alter table public.usuario enable row level security;
 alter table public.administrador enable row level security;
@@ -311,7 +296,7 @@ alter table public.nota_ocorrencia enable row level security;
 -- usuario
 create policy "usuario: ver o proprio perfil ou admin ver todos"
 on public.usuario for select to authenticated
-using (id_usuario = (select auth.uid()) or (select public.is_admin()));
+using (id_usuario = (select auth.uid()) or (select public.eh_administrador()));
 
 create policy "usuario: editar o proprio nome"
 on public.usuario for update to authenticated
@@ -321,7 +306,7 @@ with check (id_usuario = (select auth.uid()));
 -- administrador (sem escrita pelo cliente: aprovação é feita no SQL Editor)
 create policy "administrador: ver o proprio cadastro ou admin ver todos"
 on public.administrador for select to authenticated
-using (id_adm = (select auth.uid()) or (select public.is_admin()));
+using (id_adm = (select auth.uid()) or (select public.eh_administrador()));
 
 -- categoria
 create policy "categoria: leitura publica"
@@ -330,21 +315,21 @@ using (true);
 
 create policy "categoria: admin cria"
 on public.categoria for insert to authenticated
-with check ((select public.is_admin()));
+with check ((select public.eh_administrador()));
 
 create policy "categoria: admin altera"
 on public.categoria for update to authenticated
-using ((select public.is_admin()))
-with check ((select public.is_admin()));
+using ((select public.eh_administrador()))
+with check ((select public.eh_administrador()));
 
 create policy "categoria: admin remove"
 on public.categoria for delete to authenticated
-using ((select public.is_admin()));
+using ((select public.eh_administrador()));
 
 -- ocorrencia
 create policy "ocorrencia: dono ou admin le"
 on public.ocorrencia for select to authenticated
-using (id_usuario = (select auth.uid()) or (select public.is_admin()));
+using (id_usuario = (select auth.uid()) or (select public.eh_administrador()));
 
 create policy "ocorrencia: cidadao registra em seu nome"
 on public.ocorrencia for insert to authenticated
@@ -352,14 +337,14 @@ with check (id_usuario = (select auth.uid()));
 
 create policy "ocorrencia: admin atualiza status"
 on public.ocorrencia for update to authenticated
-using ((select public.is_admin()))
-with check ((select public.is_admin()));
+using ((select public.eh_administrador()))
+with check ((select public.eh_administrador()));
 
 -- localizacao
 create policy "localizacao: dono da ocorrencia ou admin le"
 on public.localizacao for select to authenticated
 using (
-    (select public.is_admin())
+    (select public.eh_administrador())
     or exists (
         select 1 from public.ocorrencia o
         where o.id_ocorrencia = localizacao.id_ocorrencia
@@ -381,7 +366,7 @@ with check (
 create policy "imagem: dono da ocorrencia ou admin le"
 on public.imagem for select to authenticated
 using (
-    (select public.is_admin())
+    (select public.eh_administrador())
     or exists (
         select 1 from public.ocorrencia o
         where o.id_ocorrencia = imagem.id_ocorrencia
@@ -410,7 +395,7 @@ with check (
 create policy "historico_status: dono da ocorrencia ou admin le"
 on public.historico_status for select to authenticated
 using (
-    (select public.is_admin())
+    (select public.eh_administrador())
     or exists (
         select 1 from public.ocorrencia o
         where o.id_ocorrencia = historico_status.id_ocorrencia
@@ -421,17 +406,15 @@ using (
 -- nota_ocorrencia (notas internas: o cidadão não vê)
 create policy "nota_ocorrencia: admin le"
 on public.nota_ocorrencia for select to authenticated
-using ((select public.is_admin()));
+using ((select public.eh_administrador()));
 
 create policy "nota_ocorrencia: admin escreve em seu nome"
 on public.nota_ocorrencia for insert to authenticated
-with check ((select public.is_admin()) and id_adm = (select auth.uid()));
+with check ((select public.eh_administrador()) and id_adm = (select auth.uid()));
 
 
--- =====================================================================
--- STORAGE: fotos das ocorrências
--- Bucket privado, só imagens, até 5 MB. Sem update/delete, para preservar a evidência.
--- =====================================================================
+-- Storage: fotos das ocorrências
+-- Bucket privado, só imagens, até 5 MB. Não há política de editar nem apagar, para a foto não sumir.
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('ocorrencias', 'ocorrencias', false, 5242880, array['image/jpeg', 'image/png', 'image/webp'])
@@ -458,14 +441,12 @@ using (
     bucket_id = 'ocorrencias'
     and (
         (storage.foldername(name))[1] = (select auth.uid())::text
-        or (select public.is_admin())
+        or (select public.eh_administrador())
     )
 );
 
 
--- =====================================================================
--- DADOS INICIAIS
--- =====================================================================
+-- Categorias iniciais
 
 insert into public.categoria (nome, descricao) values
     ('Buraco / Asfalto', 'Buracos, rachaduras e desníveis na pista.'),

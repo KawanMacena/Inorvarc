@@ -1,51 +1,36 @@
 "use strict";
 
-(function () {
-    const config = window.INOVARC_SUPABASE || {};
-    const url = typeof config.url === "string" ? config.url : "";
-    const chave = typeof config.chavePublica === "string" ? config.chavePublica : "";
-
-    function chaveSecreta(valor) {
-        if (valor.startsWith("sb_secret_")) {
-            return true;
-        }
-
-        try {
-            const conteudo = JSON.parse(atob(valor.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
-            return conteudo.role === "service_role";
-        } catch {
-            return false;
-        }
+// Se a chave secreta for colada aqui por engano, qualquer visitante conseguiria ler o banco inteiro.
+function chaveEhSecreta(chave) {
+    if (chave.startsWith("sb_secret_")) {
+        return true;
     }
 
-    const configurado = url.startsWith("https://") && !url.includes("SEU-PROJETO")
-        && chave !== "" && !chave.startsWith("SUA-");
-
-    if (!window.supabase || !configurado) {
-        console.error("Supabase não configurado: preencha assets/js/supabase-config.js.");
-        window.inovarc = Object.freeze({ supabase: null, ehAdministrador: async () => false });
-        return;
+    // Chaves antigas são um JWT, e o papel fica na parte do meio.
+    try {
+        const meio = chave.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+        return JSON.parse(atob(meio)).role === "service_role";
+    } catch (erro) {
+        return false;
     }
+}
 
-    if (chaveSecreta(chave)) {
-        console.error("A chave em supabase-config.js é secreta. Use a chave publicável (anon) e gere uma nova chave secreta no painel do Supabase.");
-        window.inovarc = Object.freeze({ supabase: null, ehAdministrador: async () => false });
-        return;
-    }
+const configurado = !SUPABASE_URL.includes("SEU-PROJETO") && !SUPABASE_CHAVE.startsWith("SUA-");
 
-    const cliente = window.supabase.createClient(url, chave, {
-        auth: {
-            flowType: "pkce",
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-        }
+// Vale null enquanto o Supabase não estiver configurado. As telas conferem isso antes de usar.
+let banco = null;
+
+if (!configurado) {
+    console.warn("Supabase não configurado. Preencha assets/js/supabase-config.js.");
+} else if (chaveEhSecreta(SUPABASE_CHAVE)) {
+    console.error("A chave em supabase-config.js é secreta. Troque pela chave publicável.");
+} else {
+    banco = supabase.createClient(SUPABASE_URL, SUPABASE_CHAVE, {
+        auth: { flowType: "pkce" }
     });
+}
 
-    async function ehAdministrador() {
-        const { data, error } = await cliente.rpc("is_admin");
-        return !error && data === true;
-    }
-
-    window.inovarc = Object.freeze({ supabase: cliente, ehAdministrador });
-})();
+async function ehAdministrador() {
+    const { data, error } = await banco.rpc("eh_administrador");
+    return !error && data === true;
+}
