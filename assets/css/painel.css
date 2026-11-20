@@ -235,3 +235,7 @@ tbody a {
         gap: 20px;
     }
 }
+
+.aguardando-acesso {
+    visibility: hidden;
+}

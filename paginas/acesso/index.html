@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f5f7fb">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Inovarc - Cidadão</title>
     <link rel="stylesheet" href="../../assets/css/acesso.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js"
+        integrity="sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ"
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <script src="../../assets/js/supabase-config.js" defer></script>
+    <script src="../../assets/js/cliente-supabase.js" defer></script>
     <script src="../../assets/js/acesso.js" defer></script>
 </head>
 <body>
@@ -31,6 +37,12 @@
             <circle cx="78" cy="47" r="2" fill="#80d343"/>
             <circle cx="78" cy="63" r="2" fill="#80d343"/>
             <circle cx="78" cy="79" r="2" fill="#80d343"/>
+        </symbol>
+        <symbol id="icone-google" viewBox="0 0 48 48">
+            <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/>
+            <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+            <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+            <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/>
         </symbol>
     </svg>
 
@@ -90,10 +102,15 @@
 
                 <label for="senhaCidadao">Senha:</label>
                 <input id="senhaCidadao" name="senha" type="password" autocomplete="current-password"
-                    placeholder="Sua senha" required>
+                    maxlength="72" placeholder="Sua senha" required>
 
                 <button class="btn-login" type="submit">Entrar</button>
-                <a href="#" class="esqueci" data-aviso="A recuperação de senha precisa ser conectada ao sistema.">Esqueci minha senha</a>
+                <span class="separador">ou</span>
+                <button class="btn-google" type="button" data-google="cidadao">
+                    <svg aria-hidden="true"><use href="#icone-google"></use></svg>
+                    Entrar com Google
+                </button>
+                <a href="#" class="esqueci" data-esqueci>Esqueci minha senha</a>
                 <a href="#" class="cadastrar" data-abrir-cadastro="cidadao">Cadastre-se</a>
             </form>
 
@@ -102,16 +119,21 @@
                 <h2>Painel Administrativo</h2>
                 <p>Acesso restrito para gestores.</p>
 
-                <label for="cnpjLogin">CNPJ:</label>
-                <input id="cnpjLogin" name="cnpj" type="text" autocomplete="username"
-                    placeholder="00.000.000/0000-00" required>
+                <label for="emailLoginAdmin">E-mail institucional:</label>
+                <input id="emailLoginAdmin" name="email" type="email" autocomplete="username"
+                    placeholder="nome@instituicao.gov.br" required>
 
                 <label for="senhaAdmin">Senha:</label>
                 <input id="senhaAdmin" name="senha" type="password" autocomplete="current-password"
-                    placeholder="Sua senha" required>
+                    maxlength="72" placeholder="Sua senha" required>
 
                 <button class="btn-login" type="submit">Entrar</button>
-                <a href="#" class="esqueci" data-aviso="A recuperação de senha precisa ser conectada ao sistema.">Esqueci minha senha</a>
+                <span class="separador">ou</span>
+                <button class="btn-google" type="button" data-google="admin">
+                    <svg aria-hidden="true"><use href="#icone-google"></use></svg>
+                    Entrar com Google
+                </button>
+                <a href="#" class="esqueci" data-esqueci>Esqueci minha senha</a>
                 <a href="#" class="cadastrar" data-abrir-cadastro="admin">Faça seu cadastro</a>
             </form>
 
@@ -122,29 +144,26 @@
 
                 <label for="nomeCidadao">Nome completo:</label>
                 <input id="nomeCidadao" name="nome" type="text" autocomplete="name"
-                    placeholder="Seu nome completo" required>
+                    minlength="2" maxlength="120" placeholder="Seu nome completo" required>
 
                 <label for="emailCadastroCidadao">E-mail:</label>
                 <input id="emailCadastroCidadao" name="email" type="email" autocomplete="email"
                     placeholder="seuemail@exemplo.com" required>
 
-                <label for="cpfCidadao">CPF:</label>
-                <input id="cpfCidadao" name="cpf" type="text" autocomplete="off"
-                    placeholder="000.000.000-00" required>
-
-                <label for="telefoneCidadao">Telefone:</label>
-                <input id="telefoneCidadao" name="telefone" type="tel" autocomplete="tel"
-                    placeholder="(00) 00000-0000" required>
-
                 <label for="senhaCadastroCidadao">Senha:</label>
-                <input id="senhaCadastroCidadao" name="senha" type="password"
-                    autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
+                <input id="senhaCadastroCidadao" name="senha" type="password" autocomplete="new-password"
+                    minlength="8" maxlength="72" placeholder="Mínimo de 8 caracteres, com letras e números" required>
 
                 <label for="confirmarSenhaCidadao">Confirme sua senha:</label>
-                <input id="confirmarSenhaCidadao" name="confirmarSenha" type="password"
-                    autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente" required>
+                <input id="confirmarSenhaCidadao" name="confirmarSenha" type="password" autocomplete="new-password"
+                    minlength="8" maxlength="72" placeholder="Digite a senha novamente" required>
 
                 <button class="btn-login" type="submit">Criar conta</button>
+                <span class="separador">ou</span>
+                <button class="btn-google" type="button" data-google="cidadao">
+                    <svg aria-hidden="true"><use href="#icone-google"></use></svg>
+                    Cadastrar com Google
+                </button>
             </form>
 
             <form id="cadastroAdmin" class="login-form" data-form="cadastro-admin">
@@ -154,29 +173,45 @@
 
                 <label for="instituicaoAdmin">Nome da instituição:</label>
                 <input id="instituicaoAdmin" name="instituicao" type="text"
-                    placeholder="Nome da prefeitura ou órgão" required>
+                    minlength="2" maxlength="150" placeholder="Nome da prefeitura ou órgão" required>
 
                 <label for="cnpjCadastroAdmin">CNPJ:</label>
-                <input id="cnpjCadastroAdmin" name="cnpj" type="text" autocomplete="off"
-                    placeholder="00.000.000/0000-00" required>
+                <input id="cnpjCadastroAdmin" name="cnpj" type="text" autocomplete="off" inputmode="numeric"
+                    maxlength="18" placeholder="00.000.000/0000-00" required>
 
                 <label for="responsavelAdmin">Nome do responsável:</label>
                 <input id="responsavelAdmin" name="responsavel" type="text" autocomplete="name"
-                    placeholder="Nome completo" required>
+                    minlength="2" maxlength="120" placeholder="Nome completo" required>
 
                 <label for="emailAdmin">E-mail institucional:</label>
                 <input id="emailAdmin" name="email" type="email" autocomplete="email"
                     placeholder="nome@instituicao.gov.br" required>
 
                 <label for="senhaCadastroAdmin">Senha:</label>
-                <input id="senhaCadastroAdmin" name="senha" type="password"
-                    autocomplete="new-password" minlength="8" placeholder="Mínimo de 8 caracteres" required>
+                <input id="senhaCadastroAdmin" name="senha" type="password" autocomplete="new-password"
+                    minlength="8" maxlength="72" placeholder="Mínimo de 8 caracteres, com letras e números" required>
 
                 <label for="confirmarSenhaAdmin">Confirme sua senha:</label>
-                <input id="confirmarSenhaAdmin" name="confirmarSenha" type="password"
-                    autocomplete="new-password" minlength="8" placeholder="Digite a senha novamente" required>
+                <input id="confirmarSenhaAdmin" name="confirmarSenha" type="password" autocomplete="new-password"
+                    minlength="8" maxlength="72" placeholder="Digite a senha novamente" required>
 
                 <button class="btn-login" type="submit">Solicitar cadastro</button>
+            </form>
+
+            <form id="novaSenha" class="login-form" data-form="nova-senha">
+                <svg class="imagem-formulario" aria-hidden="true"><use href="#icone-cidadao"></use></svg>
+                <h2>Nova senha</h2>
+                <p>Escolha uma nova senha para sua conta.</p>
+
+                <label for="senhaNova">Nova senha:</label>
+                <input id="senhaNova" name="senha" type="password" autocomplete="new-password"
+                    minlength="8" maxlength="72" placeholder="Mínimo de 8 caracteres, com letras e números" required>
+
+                <label for="confirmarSenhaNova">Confirme a nova senha:</label>
+                <input id="confirmarSenhaNova" name="confirmarSenha" type="password" autocomplete="new-password"
+                    minlength="8" maxlength="72" placeholder="Digite a senha novamente" required>
+
+                <button class="btn-login" type="submit">Salvar nova senha</button>
             </form>
         </div>
     </section>

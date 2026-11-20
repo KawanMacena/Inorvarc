@@ -316,6 +316,54 @@ input:focus-visible {
     background: linear-gradient(100deg, #063a6a, #08776f);
 }
 
+.separador {
+    display: flex;
+    margin-top: 16px;
+    align-items: center;
+    gap: 12px;
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+}
+
+.separador::before,
+.separador::after {
+    height: 1px;
+    flex: 1;
+    background: var(--borda);
+    content: "";
+}
+
+.btn-google {
+    display: inline-flex;
+    min-height: 48px;
+    margin-top: 14px;
+    padding: 12px 18px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background: #fff;
+    color: #1d1d1f;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 160ms ease;
+}
+
+.btn-google:hover {
+    background: #f5f7fb;
+}
+
+.btn-google svg {
+    width: 20px;
+    height: 20px;
+}
+
+.login-form button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
 .esqueci,
 .cadastrar {
     margin-top: 14px;

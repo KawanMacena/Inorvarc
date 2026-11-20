@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <title>Gerenciamento de ocorrências</title>
+    <link rel="stylesheet" href="../../assets/css/gerenciamento.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2/dist/umd/supabase.js"
+        integrity="sha384-A97u3Qnt9GZHURO9YJZRe7VQgGUeFzcv6I1oIGnUTxQrCxnpQMwR0/G8F2zt9abZ"
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <script src="../../assets/js/supabase-config.js" defer></script>
+    <script src="../../assets/js/cliente-supabase.js" defer></script>
+    <script src="../../assets/js/protecao-admin.js" defer></script>
+    <script src="../../assets/js/gerenciar.js" defer></script>
+</head>
+
+<body class="aguardando-acesso">
+    <header class="cabecalho">
+        <div class="indetificacao">
+            <img src="../../assets/img/fundo.png" alt="" class="logo2">
+            <img src="../../assets/img/logo1.png" alt="Logo Inovarc" class="logo1">
+        </div>
+
+        <div class="perfil no-print">AD</div>
+    </header>
+
+    <main class="container">
+        <section class="card foto-problema">
+            <h2>Foto do Problema</h2>
+
+            <div class="imagem-ocorrencia">
+                <img alt="Foto do problema" hidden>
+                <p>Foto encaminhada pelo cidadão</p>
+                <span>Categoria:</span>
+            </div>
+        </section>
+
+        <section class="card localizacao">
+            <h2>Localização Exata</h2>
+
+            <div class="endereco">
+                <span>📍 Endereço</span>
+                <p>Mapa geográfico:</p>
+            </div>
+
+            <div class="mapa">
+                <div class="marcador">📍</div>
+                <a href="#" target="_blank" rel="noopener noreferrer">Abrir no Google Maps →</a>
+            </div>
+        </section>
+
+        <section class="card detalhes">
+            <h2>Detalhes da Solicitação</h2>
+
+            <div class="informacao">
+                <span>Descrição do Cidadão</span>
+                <p></p>
+            </div>
+
+            <div class="informacao">
+                <span>Data de Recebimento</span>
+                <p></p>
+            </div>
+
+            <div class="informacao">
+                <span>Reportado por</span>
+                <p>Cidadão Anônimo</p>
+            </div>
+        </section>
+
+        <section class="card notas">
+            <h2>Notas Internas</h2>
+
+            <textarea placeholder="Escreva aqui!" maxlength="2000"></textarea>
+
+            <button class="salvar-notas" type="button">Salvar Notas</button>
+        </section>
+
+        <section class="card gerenciamento">
+            <h2>Gerenciar Status</h2>
+
+            <label>Status Atual</label>
+
+            <div class="status-atual"></div>
+
+            <label>Atualizar para:</label>
+
+            <div class="opcoes-status">
+                <button type="button">Pendente</button>
+                <button type="button">Em Análise</button>
+                <button type="button">Em Andamento</button>
+                <button type="button">Concluído</button>
+            </div>
+        </section>
+
+        <section class="card acoes no-print">
+            <h2>Ações Rápidas</h2>
+
+            <button class="atribuir" type="button">Atribuir Equipe</button>
+
+            <button class="imprimir" type="button">Imprimir Relatório</button>
+
+            <button class="compartilhar" type="button">Compartilhar</button>
+
+            <button class="voltar" type="button">Voltar</button>
+        </section>
+    </main>
+</body>
+</html>
