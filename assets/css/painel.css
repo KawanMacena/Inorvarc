@@ -9,12 +9,9 @@ body {
     background-color: #bdd1d7;
 }
 
-/* HEADER */
-
 .header {
     width: 100%;
     height: 90px;
-    /* background: #2b769e; */
     background: #0d688c;
     background: linear-gradient(170deg,rgba(18, 55, 190, 0.87) 0%, rgb(78, 211, 116) 78%, rgb(181, 192, 29) 100%);
     display: flex;
@@ -95,13 +92,9 @@ body {
     font-weight: bold;
 }
 
-/* CONTAINER */
-
 .container {
     padding: 30px;
 }
-
-/* CARDS */
 
 .cards {
     display: flex;
@@ -144,8 +137,6 @@ body {
     border-left: 8px solid green;
 }
 
-/* FILTROS */
-
 .filtros {
     background: linear-gradient(170deg,rgba(6, 46, 107, 0.87) 0%, rgb(78, 211, 134) 78%, rgba(230, 214, 73, 1) 100%);
     padding: 20px;
@@ -171,8 +162,6 @@ body {
     border-radius: 10px;
     font-size: 18px;
 }
-
-/* TABELA */
 
 .tabela {
     background: white;
@@ -212,8 +201,6 @@ tbody a {
     color: green;
     font-weight: bold;
 }
-
-/* RESPONSIVO */
 
 @media (max-width: 900px) {
     .cards {

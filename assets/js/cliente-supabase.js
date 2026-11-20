@@ -1,12 +1,10 @@
 "use strict";
 
-// Se a chave secreta for colada aqui por engano, qualquer visitante conseguiria ler o banco inteiro.
 function chaveEhSecreta(chave) {
     if (chave.startsWith("sb_secret_")) {
         return true;
     }
 
-    // Chaves antigas são um JWT, e o papel fica na parte do meio.
     try {
         const meio = chave.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
         return JSON.parse(atob(meio)).role === "service_role";
@@ -17,7 +15,6 @@ function chaveEhSecreta(chave) {
 
 const configurado = !SUPABASE_URL.includes("SEU-PROJETO") && !SUPABASE_CHAVE.startsWith("SUA-");
 
-// Vale null enquanto o Supabase não estiver configurado. As telas conferem isso antes de usar.
 let banco = null;
 
 if (!configurado) {

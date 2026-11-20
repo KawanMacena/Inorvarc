@@ -23,8 +23,8 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.4; /* Ajuste a opacidade aqui */
-  z-index: -1; /* Garante que fica atrás de tudo */
+  opacity: 0.4;
+  z-index: -1;
 }
 
 

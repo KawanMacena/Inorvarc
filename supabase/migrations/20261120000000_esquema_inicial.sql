@@ -1,12 +1,6 @@
--- Banco do Inovarc, montado a partir do DER.
--- Rode uma vez no SQL Editor do Supabase.
--- As senhas ficam no Supabase Auth (auth.users), por isso não aparecem nestas tabelas.
 
--- Tipos
 create type public.status_ocorrencia as enum ('pendente', 'em_analise', 'em_andamento', 'concluido');
 
-
--- Tabelas
 
 create table public.usuario (
     id_usuario uuid primary key references auth.users (id) on delete cascade,
@@ -54,8 +48,6 @@ create table public.localizacao (
 create table public.imagem (
     id_imagem bigint generated always as identity primary key,
     id_ocorrencia bigint not null references public.ocorrencia (id_ocorrencia) on delete cascade,
-    -- Caminho do arquivo no bucket privado "ocorrencias" ({id_usuario}/{id_ocorrencia}/{arquivo}).
-    -- Para exibir, a tela gera um link temporário com createSignedUrl.
     url text not null unique check (char_length(url) <= 300),
     criado_em timestamptz not null default now()
 );
@@ -87,10 +79,6 @@ create index nota_ocorrencia_ocorrencia_idx on public.nota_ocorrencia (id_ocorre
 create index nota_ocorrencia_id_adm_idx on public.nota_ocorrencia (id_adm);
 
 
--- Funções e triggers
-
--- Diz se quem está logado é um administrador aprovado.
--- Usa security definer para ler a tabela administrador sem passar pelo RLS dela (senão entra em loop).
 create function public.eh_administrador()
 returns boolean
 language sql
@@ -110,9 +98,6 @@ revoke execute on function public.eh_administrador() from public, anon;
 grant execute on function public.eh_administrador() to authenticated;
 
 
--- Cria o perfil de quem se cadastra (com e-mail e senha ou com Google).
--- Os dados em raw_user_meta_data vêm do navegador, então não dá para confiar neles para liberar acesso:
--- quem se cadastra como administrador sempre começa sem aprovação.
 create function public.criar_perfil_usuario()
 returns trigger
 language plpgsql
@@ -198,8 +183,6 @@ when (old.status_atual is distinct from new.status_atual)
 execute function public.registrar_historico_status();
 
 
--- Limite de 5 fotos por ocorrência. Está num trigger porque a política da própria tabela
--- não pode contar as linhas dela (dá erro de recursão).
 create function public.limitar_imagens_por_ocorrencia()
 returns trigger
 language plpgsql
@@ -224,8 +207,6 @@ before insert on public.imagem
 for each row execute function public.limitar_imagens_por_ocorrencia();
 
 
--- Registra a ocorrência e a localização de uma vez.
--- Usa security invoker, então vale o que o próprio usuário tem permissão de fazer.
 create function public.registrar_ocorrencia(
     p_id_categoria integer,
     p_descricao text,
@@ -258,10 +239,6 @@ revoke execute on function public.registrar_ocorrencia(integer, text, text, nume
 grant execute on function public.registrar_ocorrencia(integer, text, text, numeric, numeric) to authenticated;
 
 
--- Permissões
--- O Supabase libera tudo para anon e authenticated por padrão.
--- Tiramos tudo e devolvemos só o necessário, coluna por coluna.
-
 revoke all on
     public.usuario, public.administrador, public.categoria, public.ocorrencia,
     public.localizacao, public.imagem, public.historico_status, public.nota_ocorrencia
@@ -282,8 +259,6 @@ grant insert (id_ocorrencia, url) on public.imagem to authenticated;
 grant insert (id_ocorrencia, conteudo) on public.nota_ocorrencia to authenticated;
 
 
--- RLS (quem pode ver e mexer em cada linha)
-
 alter table public.usuario enable row level security;
 alter table public.administrador enable row level security;
 alter table public.categoria enable row level security;
@@ -293,7 +268,6 @@ alter table public.imagem enable row level security;
 alter table public.historico_status enable row level security;
 alter table public.nota_ocorrencia enable row level security;
 
--- usuario
 create policy "usuario: ver o proprio perfil ou admin ver todos"
 on public.usuario for select to authenticated
 using (id_usuario = (select auth.uid()) or (select public.eh_administrador()));
@@ -303,12 +277,10 @@ on public.usuario for update to authenticated
 using (id_usuario = (select auth.uid()))
 with check (id_usuario = (select auth.uid()));
 
--- administrador (sem escrita pelo cliente: aprovação é feita no SQL Editor)
 create policy "administrador: ver o proprio cadastro ou admin ver todos"
 on public.administrador for select to authenticated
 using (id_adm = (select auth.uid()) or (select public.eh_administrador()));
 
--- categoria
 create policy "categoria: leitura publica"
 on public.categoria for select to anon, authenticated
 using (true);
@@ -326,7 +298,6 @@ create policy "categoria: admin remove"
 on public.categoria for delete to authenticated
 using ((select public.eh_administrador()));
 
--- ocorrencia
 create policy "ocorrencia: dono ou admin le"
 on public.ocorrencia for select to authenticated
 using (id_usuario = (select auth.uid()) or (select public.eh_administrador()));
@@ -340,7 +311,6 @@ on public.ocorrencia for update to authenticated
 using ((select public.eh_administrador()))
 with check ((select public.eh_administrador()));
 
--- localizacao
 create policy "localizacao: dono da ocorrencia ou admin le"
 on public.localizacao for select to authenticated
 using (
@@ -362,7 +332,6 @@ with check (
     )
 );
 
--- imagem
 create policy "imagem: dono da ocorrencia ou admin le"
 on public.imagem for select to authenticated
 using (
@@ -374,7 +343,6 @@ using (
     )
 );
 
--- O arquivo precisa já ter sido enviado e estar na pasta do próprio usuário e da própria ocorrência.
 create policy "imagem: dono da ocorrencia registra foto enviada"
 on public.imagem for insert to authenticated
 with check (
@@ -391,7 +359,6 @@ with check (
     )
 );
 
--- historico_status (escrito só pelo trigger)
 create policy "historico_status: dono da ocorrencia ou admin le"
 on public.historico_status for select to authenticated
 using (
@@ -403,7 +370,6 @@ using (
     )
 );
 
--- nota_ocorrencia (notas internas: o cidadão não vê)
 create policy "nota_ocorrencia: admin le"
 on public.nota_ocorrencia for select to authenticated
 using ((select public.eh_administrador()));
@@ -412,9 +378,6 @@ create policy "nota_ocorrencia: admin escreve em seu nome"
 on public.nota_ocorrencia for insert to authenticated
 with check ((select public.eh_administrador()) and id_adm = (select auth.uid()));
 
-
--- Storage: fotos das ocorrências
--- Bucket privado, só imagens, até 5 MB. Não há política de editar nem apagar, para a foto não sumir.
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('ocorrencias', 'ocorrencias', false, 5242880, array['image/jpeg', 'image/png', 'image/webp'])
@@ -445,8 +408,6 @@ using (
     )
 );
 
-
--- Categorias iniciais
 
 insert into public.categoria (nome, descricao) values
     ('Buraco / Asfalto', 'Buracos, rachaduras e desníveis na pista.'),

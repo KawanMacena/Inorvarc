@@ -6,10 +6,10 @@
 
 body {
     text-align: center;
-    justify-content: center; /* horizontal */
-    align-items: center;     /* vertical */
-    background: linear-gradient(135deg, #001447, #0A4F8A, #37B89B, #8AD143); /* gradiente de fundo */
-    background-attachment: fixed; /* para que o fundo fique fixo durante a rolagem */
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #001447, #0A4F8A, #37B89B, #8AD143);
+    background-attachment: fixed;
 }
 
 
@@ -35,7 +35,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    height: 100vh; /* para ocupar toda a altura da tela */
+    height: 100vh;
  
 
 }
@@ -53,14 +53,12 @@ body {
 
     padding: 20px;
 
-    /* estilo para a caixa de login */
-    background:rgba(255,255,255,0.08); /* cor de fundo semi-transparente para a caixa */
-    backdrop-filter:blur(15px); /* efeito de desfoque para o fundo da caixa */
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
     box-shadow:
     0 0 30px rgba(255,255,255,0.1),
-    0 0 60px rgba(255,255,255,0.05);/* sombras para dar profundidade */
+    0 0 60px rgba(255,255,255,0.05);
     
-    /* bordas e arredondamento */
     border:1px solid rgba(255,255,255,0.2);
     border-radius: 20px;
 
@@ -89,7 +87,7 @@ label {
     text-align: left;
     color: whitesmoke;
     margin-bottom: 5px;
-    align-self: flex-start; /* para alinhar os rótulos à esquerda */
+    align-self: flex-start;
 }
 
 .box input {

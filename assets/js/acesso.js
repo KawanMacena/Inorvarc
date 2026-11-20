@@ -6,7 +6,6 @@ const overlay = document.getElementById("overlay");
 const formularios = document.querySelectorAll(".login-form");
 let tipoAcessoAtual = "cidadao";
 
-// Endereço desta página (sem parâmetros), para onde o Google e os e-mails devolvem o usuário.
 const paginaAcesso = window.location.origin + window.location.pathname;
 const paginaPainel = new URL("../painel/index.html", window.location.href).href;
 
@@ -16,8 +15,6 @@ document.querySelectorAll("img").forEach((imagem) => {
     }, { once: true });
 });
 
-
-/* ABRIR E FECHAR OS FORMULÁRIOS */
 
 function mostrarFormulario(idFormulario) {
     formularios.forEach((formulario) => {
@@ -75,14 +72,10 @@ document.addEventListener("keydown", (evento) => {
 });
 
 
-/* VALIDAÇÕES */
-
-// Mínimo de 8 caracteres, com pelo menos uma letra e um número.
 function senhaForte(senha) {
     return senha.length >= 8 && /[A-Za-z]/.test(senha) && /\d/.test(senha);
 }
 
-// Calcula um dígito verificador do CNPJ somando cada número vezes o seu peso.
 function digitoCnpj(cnpj, pesos) {
     let soma = 0;
     for (let i = 0; i < pesos.length; i++) {
@@ -107,7 +100,6 @@ function cnpjValido(cnpj) {
     return primeiro === Number(cnpj[12]) && segundo === Number(cnpj[13]);
 }
 
-// Devolve a senha se estiver tudo certo, ou null depois de avisar o usuário.
 function conferirSenhas(formulario) {
     const senha = formulario.elements.senha.value;
     const confirmacao = formulario.elements.confirmarSenha.value;
@@ -128,9 +120,6 @@ function conferirSenhas(formulario) {
 }
 
 
-/* MENSAGENS */
-
-// O texto não diz se o e-mail existe ou não, para ninguém descobrir quem tem conta.
 const mensagensDeErro = {
     invalid_credentials: "E-mail ou senha inválidos.",
     email_not_confirmed: "Confirme seu e-mail antes de entrar. Veja sua caixa de entrada.",
@@ -153,9 +142,6 @@ function bancoDisponivel() {
 }
 
 
-/* LOGIN */
-
-// Depois de entrar, cada tipo de conta vai para um lugar.
 async function irParaOLugarCerto(tipoAcesso) {
     if (await ehAdministrador()) {
         window.location.href = paginaPainel;
@@ -163,7 +149,6 @@ async function irParaOLugarCerto(tipoAcesso) {
     }
 
     if (tipoAcesso === "admin") {
-        // Se existe um cadastro de administrador, ele só não foi aprovado ainda.
         const { data: cadastro } = await banco.from("administrador").select("aprovado").maybeSingle();
         await banco.auth.signOut();
 
@@ -213,8 +198,6 @@ document.getElementById("loginAdmin").addEventListener("submit", (evento) => {
     entrarComSenha(evento, "admin");
 });
 
-
-/* CADASTRO */
 
 const formCadastroCidadao = document.getElementById("cadastroCidadao");
 
@@ -303,10 +286,6 @@ formCadastroAdmin.addEventListener("submit", async (evento) => {
 });
 
 
-/* LOGIN COM GOOGLE */
-
-// O Google leva o usuário para fora do site e depois devolve para esta página.
-// Por isso guardamos de qual botão ele saiu, para saber para onde mandar quando voltar.
 document.querySelectorAll("[data-google]").forEach((botao) => {
     botao.addEventListener("click", async () => {
         if (!bancoDisponivel()) {
@@ -341,8 +320,6 @@ async function terminarLoginGoogle() {
 }
 
 
-/* RECUPERAR SENHA */
-
 document.querySelectorAll("[data-esqueci]").forEach((link) => {
     link.addEventListener("click", async (evento) => {
         evento.preventDefault();
@@ -366,12 +343,10 @@ document.querySelectorAll("[data-esqueci]").forEach((link) => {
             return;
         }
 
-        // Mesma resposta exista a conta ou não.
         alert("Se este e-mail estiver cadastrado, você vai receber um link para criar uma nova senha.");
     });
 });
 
-// Quem abre o link do e-mail cai aqui e escolhe a nova senha.
 document.getElementById("novaSenha").addEventListener("submit", async (evento) => {
     evento.preventDefault();
     if (!bancoDisponivel()) {
@@ -398,8 +373,6 @@ document.getElementById("novaSenha").addEventListener("submit", async (evento) =
 });
 
 
-/* AO CARREGAR A PÁGINA */
-
 if (banco !== null) {
     banco.auth.onAuthStateChange((evento) => {
         if (evento === "PASSWORD_RECOVERY") {
@@ -407,7 +380,6 @@ if (banco !== null) {
         }
     });
 
-    // Link de erro devolvido pelo Supabase, por exemplo link de e-mail vencido.
     if (new URLSearchParams(window.location.search).has("error")) {
         sessionStorage.removeItem("tipoAcessoGoogle");
         window.history.replaceState(null, "", paginaAcesso);

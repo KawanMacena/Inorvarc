@@ -1,15 +1,11 @@
 "use strict";
 
-/* GERENCIAMENTO DE OCORRÊNCIAS */
-
-/* ELEMENTOS */
 const statusAtual = document.querySelector(".status-atual");
 const opcoesStatus = document.querySelectorAll(".opcoes-status button");
 
 const campoNotas = document.querySelector(".notas textarea");
 const botaoSalvarNotas = document.querySelector(".salvar-notas");
 
-/* STATUS DA SOLICITAÇÃO */
 statusAtual.textContent = "Não definido";
 
 opcoesStatus.forEach((botao) => {
@@ -23,8 +19,6 @@ opcoesStatus.forEach((botao) => {
     });
 });
 
-/* NOTAS INTERNAS */
-// Ainda ficam no navegador; passam para a tabela nota_ocorrencia quando a tela ler a ocorrência do banco.
 campoNotas.value = localStorage.getItem("notasGerenciamento") || "";
 
 botaoSalvarNotas.addEventListener("click", () => {
@@ -39,7 +33,6 @@ botaoSalvarNotas.addEventListener("click", () => {
     alert("Notas salvas com sucesso!");
 });
 
-/* ATRIBUIR EQUIPE */
 document.querySelector(".atribuir").addEventListener("click", () => {
     const equipe = prompt("Digite o nome da equipe responsável:");
 
@@ -55,12 +48,10 @@ document.querySelector(".atribuir").addEventListener("click", () => {
     alert("Equipe atribuída: " + equipe);
 });
 
-/* IMPRIMIR RELATÓRIO */
 document.querySelector(".imprimir").addEventListener("click", () => {
     window.print();
 });
 
-/* COMPARTILHAR */
 document.querySelector(".compartilhar").addEventListener("click", async () => {
     const dados = {
         title: "Gerenciamento",
@@ -82,7 +73,6 @@ document.querySelector(".compartilhar").addEventListener("click", async () => {
     }
 });
 
-/* BOTÃO VOLTAR */
 document.querySelector(".voltar").addEventListener("click", () => {
     window.location.href = "../painel/index.html";
 });

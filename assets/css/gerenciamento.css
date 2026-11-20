@@ -1,5 +1,4 @@
 
-/* CONFIGURAÇÕES GERAIS */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +12,6 @@ body {
     min-height: 100vh;
 }
 
-/* CONTAINER PRINCIPAL */
 .container {
     width: 90%;
     max-width: 1100px;
@@ -23,7 +21,6 @@ body {
     gap: 22px;
 }
 
-/* CABEÇALHO */
 .cabecalho {
     background: linear-gradient(170deg,rgba(18, 55, 190, 0.87) 0%, rgb(78, 211, 116) 78%, rgb(181, 192, 29) 100%);
     color: white;
@@ -74,7 +71,6 @@ body {
     font-weight: bold;
 }
 
-/* CARTÕES */
 .card {
     background: white;
     padding: 25px;
@@ -90,7 +86,6 @@ body {
     padding-bottom: 10px;
 }
 
-/* FOTO DO PROBLEMA */
 .imagem-ocorrencia {
     display: flex;
     flex-direction: column;
@@ -118,7 +113,6 @@ body {
     font-size: 14px;
 }
 
-/* LOCALIZAÇÃO */
 .endereco {
     margin-bottom: 18px;
     line-height: 1.8;
@@ -156,7 +150,6 @@ body {
     text-decoration: none;
 }
 
-/* DETALHES DA SOLICITAÇÃO */
 .informacao {
     padding: 12px 0;
     border-bottom: 1px solid #EEEEEE;
@@ -174,7 +167,6 @@ body {
     font-size: 16px;
 }
 
-/* GERENCIAR STATUS */
 .gerenciamento label {
     display: block;
     font-weight: bold;
@@ -217,7 +209,6 @@ body {
     border-color: #172D4B;
 }
 
-/* NOTAS INTERNAS */
 .notas textarea {
     width: 100%;
     min-height: 120px;
@@ -243,7 +234,6 @@ body {
     cursor: pointer;
 }
 
-/* AÇÕES RÁPIDAS */
 .acoes {
     display: flex;
     flex-direction: column;
@@ -288,7 +278,6 @@ body {
     opacity: 0.85;
 }
 
-/* RESPONSIVIDADE */
 @media (max-width: 600px) {
 
     .container {
@@ -317,7 +306,6 @@ body {
         width: 100%;
     }
 }
-/* Esconde a barra de rolagem (scrollbar) */
 html {
     scrollbar-width: none; 
     -ms-overflow-style: none; 

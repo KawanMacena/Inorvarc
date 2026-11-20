@@ -1,7 +1,5 @@
 "use strict";
 
-// Esta página só esconde o conteúdo de quem não é administrador.
-// Quem protege os dados de verdade são as regras (RLS) do banco.
 const paginaAcesso = new URL("../acesso/index.html", window.location.href).href;
 
 async function protegerPagina() {
