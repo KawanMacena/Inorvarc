@@ -17,6 +17,7 @@
     <script src="../../assets/js/supabase-config.js" defer></script>
     <script src="../../assets/js/cliente-supabase.js" defer></script>
     <script src="../../assets/js/protecao-admin.js" defer></script>
+    <script src="../../assets/js/ocorrencias.js" defer></script>
     <script src="../../assets/js/gerenciar.js" defer></script>
 </head>
 
@@ -35,9 +36,9 @@
             <h2>Foto do Problema</h2>
 
             <div class="imagem-ocorrencia">
-                <img alt="Foto do problema" hidden>
-                <p>Foto encaminhada pelo cidadão</p>
-                <span>Categoria:</span>
+                <div id="fotos" class="fotos"></div>
+                <p id="legendaFoto">Carregando...</p>
+                <span id="categoria">Categoria:</span>
             </div>
         </section>
 
@@ -46,12 +47,12 @@
 
             <div class="endereco">
                 <span>📍 Endereço</span>
-                <p>Mapa geográfico:</p>
+                <p id="endereco"></p>
             </div>
 
             <div class="mapa">
                 <div class="marcador">📍</div>
-                <a href="#" target="_blank" rel="noopener noreferrer">Abrir no Google Maps →</a>
+                <a id="linkMapa" href="#" target="_blank" rel="noopener noreferrer" hidden>Abrir no Google Maps →</a>
             </div>
         </section>
 
@@ -60,26 +61,28 @@
 
             <div class="informacao">
                 <span>Descrição do Cidadão</span>
-                <p></p>
+                <p id="descricao" class="texto-livre"></p>
             </div>
 
             <div class="informacao">
                 <span>Data de Recebimento</span>
-                <p></p>
+                <p id="dataRecebimento"></p>
             </div>
 
             <div class="informacao">
                 <span>Reportado por</span>
-                <p>Cidadão Anônimo</p>
+                <p id="reportadoPor"></p>
             </div>
         </section>
 
         <section class="card notas">
             <h2>Notas Internas</h2>
 
-            <textarea placeholder="Escreva aqui!" maxlength="2000"></textarea>
+            <ul class="lista-notas"></ul>
 
-            <button class="salvar-notas" type="button">Salvar Notas</button>
+            <textarea placeholder="Escreva uma nova nota" maxlength="2000"></textarea>
+
+            <button class="salvar-notas" type="button">Salvar nota</button>
         </section>
 
         <section class="card gerenciamento">
@@ -92,10 +95,10 @@
             <label>Atualizar para:</label>
 
             <div class="opcoes-status">
-                <button type="button">Pendente</button>
-                <button type="button">Em Análise</button>
-                <button type="button">Em Andamento</button>
-                <button type="button">Concluído</button>
+                <button type="button" data-status="pendente">Pendente</button>
+                <button type="button" data-status="em_analise">Em análise</button>
+                <button type="button" data-status="em_andamento">Em andamento</button>
+                <button type="button" data-status="concluido">Concluído</button>
             </div>
         </section>
 

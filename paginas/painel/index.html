@@ -13,9 +13,10 @@
     <script src="../../assets/js/supabase-config.js" defer></script>
     <script src="../../assets/js/cliente-supabase.js" defer></script>
     <script src="../../assets/js/protecao-admin.js" defer></script>
+    <script src="../../assets/js/ocorrencias.js" defer></script>
+    <script src="../../assets/js/painel.js" defer></script>
 
     <title>Painel Administrativo</title>
-
 </head>
 
 <body class="aguardando-acesso">
@@ -24,7 +25,7 @@
 
         <div class="header-left">
             <img src="../../assets/img/logo.jpeg" alt="Logo">
-            
+
             <div class="titulo">
                 <h1>Painel Administrativo</h1>
                 <p>Gestão de Solicitações</p>
@@ -35,8 +36,8 @@
             <a href="../acesso/index.html" data-sair>Sair</a>
 
             <div class="notificacao">
-                    🔔
-                <span>2</span>
+                🔔
+                <span id="contadorPendentes">0</span>
             </div>
 
             <div class="perfil">
@@ -46,42 +47,42 @@
 
     </header>
 
-        <main class="container">
+    <main class="container">
 
         <section class="cards">
 
             <div class="card pendente">
                 <h3>Pendentes</h3>
-                <h2>1</h2>
+                <h2 data-total="pendente">0</h2>
             </div>
 
             <div class="card analise">
                 <h3>Em Análise</h3>
-                <h2>0</h2>
+                <h2 data-total="em_analise">0</h2>
             </div>
 
             <div class="card andamento">
                 <h3>Em Andamento</h3>
-                <h2>1</h2>
+                <h2 data-total="em_andamento">0</h2>
             </div>
 
             <div class="card concluido">
                 <h3>Concluídos</h3>
-                <h2>1</h2>
+                <h2 data-total="concluido">0</h2>
             </div>
 
         </section>
 
         <section class="filtros">
 
-            <input type="text" placeholder="Buscar por endereço, categoria ou descrição...">
+            <input id="busca" type="text" placeholder="Buscar por endereço, categoria ou descrição...">
 
-            <select>
-                <option>Todos os Status</option>
-                <option>Pendente</option>
-                <option>Em análise</option>
-                <option>Em andamento</option>
-                <option>Concluído</option>
+            <select id="filtroStatus">
+                <option value="">Todos os Status</option>
+                <option value="pendente">Pendente</option>
+                <option value="em_analise">Em análise</option>
+                <option value="em_andamento">Em andamento</option>
+                <option value="concluido">Concluído</option>
             </select>
 
         </section>
@@ -101,47 +102,12 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>#1</td>
-                        <td>Buraco / Asfalto</td>
-                        <td>Av. Paulista</td>
-                        <td>Buraco grande na pista</td>
-                        <td>Pendente</td>
-                        <td>1h atrás</td>
-                        <td><a href="../gerenciar/index.html">Ver detalhes</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>#2</td>
-                        <td>Iluminação</td>
-                        <td>Rua das Flores</td>
-                        <td>Poste apagado</td>
-                        <td>Em andamento</td>
-                        <td>1 dia atrás</td>
-                        <td><a href="../gerenciar/index.html">Ver detalhes</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>#3</td>
-                        <td>Lixo / Entulho</td>
-                        <td>Av. Brasil</td>
-                        <td>Lixo acumulado na calçada</td>
-                        <td>Concluído</td>
-                        <td>2 dias atrás</td>
-                        <td><a href="../gerenciar/index.html">Ver detalhes</a></td>
-                    </tr>
-
-
-
-                </tbody>
+                <tbody id="corpoTabela"></tbody>
             </table>
 
         </section>
 
     </main>
 
-
-    
 </body>
-    </html>
+</html>

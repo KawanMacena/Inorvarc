@@ -5,7 +5,7 @@ const paginaAcesso = new URL("../acesso/index.html", window.location.href).href;
 async function protegerPagina() {
     if (banco === null) {
         window.location.replace(paginaAcesso);
-        return;
+        return false;
     }
 
     const { data } = await banco.auth.getSession();
@@ -14,10 +14,11 @@ async function protegerPagina() {
     if (!logado || !(await ehAdministrador())) {
         await banco.auth.signOut();
         window.location.replace(paginaAcesso);
-        return;
+        return false;
     }
 
     document.body.classList.remove("aguardando-acesso");
+    return true;
 }
 
 document.querySelectorAll("[data-sair]").forEach((link) => {
@@ -27,5 +28,3 @@ document.querySelectorAll("[data-sair]").forEach((link) => {
         window.location.replace(paginaAcesso);
     });
 });
-
-protegerPagina();

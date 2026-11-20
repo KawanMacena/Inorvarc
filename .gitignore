@@ -1,5 +1,6 @@
 .env
 .env.*
+client_secret_*.json
 node_modules/
 supabase/.temp/
 supabase/.branches/
