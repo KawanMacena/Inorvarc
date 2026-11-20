@@ -50,12 +50,6 @@ body {
 }
 
 
-.identificacao img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
-
 .perfil {
     background: #F2B705;
     color: #172D4B;
@@ -292,10 +286,6 @@ body {
 
     .cabecalho {
         padding: 15px;
-    }
-
-    .identificacao {
-        font-size: 16px;
     }
 
     .opcoes-status {

@@ -6,7 +6,7 @@ O site é feito em HTML, CSS e JavaScript. O banco de dados e o login ficam no S
 
 ## Branches
 
-- `main`: versão organizada do projeto.
+- `main`: versão organizada do projeto. As telas antigas `home`, `portal` e `login` (que tinha a senha `admin` / `123456` no JavaScript) foram removidas, porque nenhuma outra tela abria elas.
 - `kawan`: tela de acesso refeita, com os cadastros de cidadão e de administrador. Já foi trazida para a `main`.
 - `ewerton`: outra versão do front-end, com histórico separado. A novidade dela era a tela de gerenciamento de uma ocorrência, que entrou na `main` em `paginas/gerenciar`. As telas de login e cadastro dela repetiam as que já tínhamos, e os arquivos `adminMock.js` e `usermock.js` não vieram porque guardavam senha em texto puro.
 
@@ -18,7 +18,6 @@ paginas/
   acesso/                   login, cadastros, Google e nova senha
   painel/                   painel de ocorrências (só administrador)
   gerenciar/                detalhes de uma ocorrência (só administrador)
-  home, portal, login/      telas antigas, ainda em desenvolvimento
 assets/
   css/                      estilos de cada tela
   img/                      logos e imagens
@@ -98,7 +97,6 @@ Antes de publicar:
 - Ligar a proteção contra senhas vazadas e exigir MFA dos administradores.
 - Toda tabela nova precisa de RLS ligado e de políticas.
 - Ao mostrar dados do banco na tela, usar `textContent` e não `innerHTML`.
-- Apagar a pasta `paginas/login`, que tem a senha `123456` visível no JavaScript.
 
 ## O que falta
 
